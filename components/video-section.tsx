@@ -27,7 +27,7 @@ const VideoSection = () => {
   }
 
   // Video URL
-  const videoUrl = "https://drive.google.com/file/d/19mOlJAAwsCVOCAoQhiEh9wqz32n_Dvag/view"
+  const videoUrl = "https://drive.google.com/file/d/1FDKsI94ok6MCD3IgVlbef9jOLReteZZT/view?usp=sharing"
   
   // Using your Imgur link (added .jpg extension for better compatibility)
   const thumbnailUrl = "https://i.imgur.com/y3UEMbq.jpg"
