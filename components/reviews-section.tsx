@@ -16,7 +16,7 @@ const ReviewsSection = () => {
       id: 1,
       name: "Tim B.",
       username: "@Tim B.",
-      avatar: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Twitter-ZDHPxIvYwDefCVT4tyKJl8yi85B7uF.png",
+      avatar: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Tim.jpg-zQ5FZnv79IDUHLooxBfg9u4odK2gLF.jpeg",
       text: "Hier wird dir nicht irgendein Bullshit verkauft – hier gibt's echte Einblicke, die dich vor Verlusten schützen und deine Gewinne maximieren. Während andere verlieren, verdiene ich!",
       verified: true,
     },
@@ -24,8 +24,7 @@ const ReviewsSection = () => {
       id: 2,
       name: "Max R.",
       username: "@Max R.",
-      avatar:
-        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Twitter%20%282%29-f8MKIjVAXWgEb2pLYlBS6kswqtkJwE.png",
+      avatar: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Max.jpg-IteVAETblT4PyecRGu7nnhvMKg29q8.jpeg",
       text: "Ich hätte nie gedacht, dass ich mit Krypto so schnell durchstarten kann! Wer hier nicht dabei ist, verpasst echte Insider-Infos, die sonst niemand teilt. Seit meinem Beitritt hat sich mein Portfolio verdreifacht!",
       verified: true,
     },
@@ -33,8 +32,7 @@ const ReviewsSection = () => {
       id: 3,
       name: "Kevin S.",
       username: "@Kevin S.",
-      avatar:
-        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Twitter%20%284%29-EIFGOuelUTawtpXkAKGPucXX5EbOtZ.png",
+      avatar: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Kevin.jpg-XdHqaS5VZAfiXToZL5M9ss26tINNH9.jpeg",
       text: "Die Signale hier sind einfach NEXT LEVEL! Während andere noch überlegen, steige ich schon in die besten Coins ein. Jeder, der zögert, verpasst die Chance seines Lebens!",
       verified: true,
     },
@@ -42,8 +40,7 @@ const ReviewsSection = () => {
       id: 4,
       name: "Lisa H.",
       username: "@Lisa H.",
-      avatar:
-        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Twitter%20%283%29-oMWT4MpylS0sh01WCJjZDwElS97CAs.png",
+      avatar: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Lisa.jpg-nf63dF2FzDipY3rXPN4Q0YBj0gfc9I.jpeg",
       text: "Hätte ich diese Community früher entdeckt, wäre ich jetzt schon finanziell frei. Die Strategien hier funktionieren, während der Rest der Welt noch schläft!",
       verified: true,
     },
@@ -51,8 +48,7 @@ const ReviewsSection = () => {
       id: 5,
       name: "Nina P.",
       username: "@Nina P.",
-      avatar:
-        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Twitter%20%286%29-vRtcnSTlfJYMByGy0KByN6AXr58Mb4.png",
+      avatar: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Ninja.jpg-5kxNHp6OWDRgPsMINJi054EE03Bk13.jpeg",
       text: "Ich habe lange gezögert, aber als ich gesehen habe, wie viel die anderen hier verdienen, musste ich einfach rein! Und was soll ich sagen? Innerhalb von 2 Wochen mein erster großer Gewinn!",
       verified: true,
     },
@@ -60,8 +56,7 @@ const ReviewsSection = () => {
       id: 6,
       name: "Jonas K.",
       username: "@Jonas K.",
-      avatar:
-        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Twitter%20%285%29-CNUFp2GjnwW8CtelPr226P94wGhMOg.png",
+      avatar: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Jonas.jpg-sB8YNeGI6NNf4UB4A58SH1PLHowZUH.jpeg",
       text: "Mein Kollege meinte, ich soll beitreten – beste Entscheidung meines Lebens! Die meisten Leute verlieren Geld mit Krypto, weil sie KEINEN Plan haben. Wer hier nicht dabei ist, bleibt auf der Strecke!",
       verified: true,
     },
@@ -101,7 +96,7 @@ const ReviewsSection = () => {
     <section className="py-16 bg-white">
       <div className="container mx-auto">
         <h2 className="text-3xl font-bold mb-12 text-center text-gray-900">
-          What Our <span className="text-primary">Students</span> Say
+          What Our <span className="text-primary">Student's Say</span>
         </h2>
 
         <div className="relative">
@@ -140,13 +135,15 @@ const ReviewsSection = () => {
                 className="min-w-[350px] max-w-[350px] bg-white border border-gray-200 rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow snap-start"
               >
                 <div className="flex items-start space-x-4 mb-4">
-                  <Image
-                    src={review.avatar || "/placeholder.svg"}
-                    alt={review.name}
-                    width={48}
-                    height={48}
-                    className="rounded-full"
-                  />
+                  <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-primary flex-shrink-0">
+                    <Image
+                      src={review.avatar || "/placeholder.svg"}
+                      alt={review.name}
+                      width={56}
+                      height={56}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
                   <div>
                     <div className="flex items-center">
                       <h3 className="font-bold text-gray-900">{review.name}</h3>
@@ -168,4 +165,3 @@ const ReviewsSection = () => {
 }
 
 export default ReviewsSection
-

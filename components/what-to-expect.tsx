@@ -1,14 +1,15 @@
 "use client"
-
+import { useLanguage } from "@/context/language-context"
 import { CheckCircle } from "lucide-react"
 import { motion } from "framer-motion"
 
 const WhatToExpect = () => {
-  const expectations = [
-    "Up to 5-7 exclusive signals daily – directly from our experts!",
-    "A team of 15 experienced analysts – for maximum hit rate.",
-    "Over 7 years of experience in the crypto field – we know what works!",
-  ]
+  const { t } = useLanguage()
+
+  // Define static expectations and details arrays
+  const expectations = [t("whatToExpect.point1"), t("whatToExpect.point2"), t("whatToExpect.point3")]
+
+  const details = [t("whatToExpect.detail1"), t("whatToExpect.detail2"), t("whatToExpect.detail3")]
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -36,7 +37,7 @@ const WhatToExpect = () => {
       <div className="container mx-auto">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl font-bold mb-8 text-gray-900 text-center">
-            What to <span className="text-primary">Expect</span>
+            {t("whatToExpect.title")} <span className="text-primary">{t("whatToExpect.highlightedTitle")}</span>
           </h2>
 
           <motion.div
@@ -55,34 +56,15 @@ const WhatToExpect = () => {
                 <CheckCircle className="text-primary mr-4 flex-shrink-0 mt-1" size={24} />
                 <div>
                   <p className="text-xl text-gray-800">{item}</p>
-                  {index === 0 && (
-                    <p className="text-gray-600 mt-2">
-                      Our team monitors the market 24/7 to identify the most promising opportunities before they go
-                      mainstream.
-                    </p>
-                  )}
-                  {index === 1 && (
-                    <p className="text-gray-600 mt-2">
-                      Each signal undergoes rigorous analysis by multiple experts to ensure the highest probability of
-                      success.
-                    </p>
-                  )}
-                  {index === 2 && (
-                    <p className="text-gray-600 mt-2">
-                      Our track record speaks for itself, with consistent returns even during market downturns.
-                    </p>
-                  )}
+                  {details[index] && <p className="text-gray-600 mt-2">{details[index]}</p>}
                 </div>
               </motion.div>
             ))}
           </motion.div>
 
           <div className="mt-12 bg-white border border-gray-200 rounded-xl p-6 text-center shadow-lg">
-            <blockquote className="text-xl text-gray-800 italic mb-4">
-              "The quality and accuracy of the signals I receive daily have completely transformed my crypto portfolio.
-              I've never seen anything like it."
-            </blockquote>
-            <cite className="text-gray-900 font-medium">— Michael R., Member since 2022</cite>
+            <blockquote className="text-xl text-gray-800 italic mb-4">"{t("whatToExpect.testimonial")}"</blockquote>
+            <cite className="text-gray-900 font-medium">{t("whatToExpect.testimonialAuthor")}</cite>
           </div>
         </div>
       </div>
@@ -91,4 +73,3 @@ const WhatToExpect = () => {
 }
 
 export default WhatToExpect
-

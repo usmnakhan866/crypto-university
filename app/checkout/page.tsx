@@ -3,9 +3,9 @@
 import type React from "react"
 
 import { useState } from "react"
-import Image from "next/image"
 import Link from "next/link"
-import { CheckCircle, CreditCard, Lock, AlertCircle, ArrowLeft } from "lucide-react"
+import { CheckCircle, Lock, AlertCircle, ArrowLeft } from "lucide-react"
+import PaymentMethods from "./payment-methods"
 
 export default function CheckoutPage() {
   const [step, setStep] = useState(1)
@@ -29,6 +29,16 @@ export default function CheckoutPage() {
 
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitSuccess, setSubmitSuccess] = useState(false)
+
+  // Define benefits directly as an array to avoid any mapping issues
+  const benefits = [
+    "Instant access to 5-7 daily signals",
+    "Step-by-step guides for wallet setup",
+    "Exclusive instructional videos",
+    "24/7 expert support",
+    "Access to members-only community",
+    "No minimum term - cancel anytime",
+  ]
 
   const validateForm = () => {
     let valid = true
@@ -56,30 +66,6 @@ export default function CheckoutPage() {
         valid = false
       }
     } else if (step === 2) {
-      if (!formData.cardNumber.trim()) {
-        errors.cardNumber = "Card number is required"
-        valid = false
-      } else if (!/^\d{16}$/.test(formData.cardNumber.replace(/\s/g, ""))) {
-        errors.cardNumber = "Card number must be 16 digits"
-        valid = false
-      }
-
-      if (!formData.expiryDate.trim()) {
-        errors.expiryDate = "Expiry date is required"
-        valid = false
-      } else if (!/^(0[1-9]|1[0-2])\/\d{2}$/.test(formData.expiryDate)) {
-        errors.expiryDate = "Expiry date must be in MM/YY format"
-        valid = false
-      }
-
-      if (!formData.cvv.trim()) {
-        errors.cvv = "CVV is required"
-        valid = false
-      } else if (!/^\d{3,4}$/.test(formData.cvv)) {
-        errors.cvv = "CVV must be 3 or 4 digits"
-        valid = false
-      }
-
       if (!formData.agreeToTerms) {
         errors.agreeToTerms = "You must agree to the terms"
         valid = false
@@ -93,23 +79,10 @@ export default function CheckoutPage() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target
 
-    // Format card number with spaces
-    if (name === "cardNumber") {
-      const formattedValue = value
-        .replace(/\s/g, "")
-        .replace(/(\d{4})/g, "$1 ")
-        .trim()
-
-      setFormData((prev) => ({
-        ...prev,
-        [name]: formattedValue,
-      }))
-    } else {
-      setFormData((prev) => ({
-        ...prev,
-        [name]: type === "checkbox" ? checked : value,
-      }))
-    }
+    setFormData((prev) => ({
+      ...prev,
+      [name]: type === "checkbox" ? checked : value,
+    }))
 
     // Clear error when user types
     if (formErrors[name as keyof typeof formErrors]) {
@@ -134,32 +107,15 @@ export default function CheckoutPage() {
     window.scrollTo(0, 0)
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-
-    if (!validateForm()) {
-      return
-    }
-
-    setIsSubmitting(true)
-
-    // Simulate form submission
-    setTimeout(() => {
-      setIsSubmitting(false)
-      setSubmitSuccess(true)
-      // Scroll to top to show success message
-      window.scrollTo(0, 0)
-    }, 1500)
+  const handlePaymentSuccess = () => {
+    setIsSubmitting(false)
+    setSubmitSuccess(true)
+    window.scrollTo(0, 0)
   }
 
-  const benefits = [
-    "Instant access to 5-7 daily signals",
-    "Step-by-step guides for wallet setup",
-    "Exclusive instructional videos",
-    "24/7 expert support",
-    "Access to members-only community",
-    "No minimum term - cancel anytime",
-  ]
+  const handlePaymentCancel = () => {
+    setIsSubmitting(false)
+  }
 
   return (
     <>
@@ -281,7 +237,7 @@ export default function CheckoutPage() {
                 {submitSuccess ? (
                   <div className="bg-white border border-gray-200 rounded-xl p-8 text-center shadow-lg">
                     <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-green-900/30 mb-6">
-                      <CheckCircle size={40} className="text-green-500" />
+                      <CheckCircle size={40} className="text-green-400" />
                     </div>
                     <h2 className="text-2xl font-bold mb-4 text-gray-900">Payment Successful!</h2>
                     <p className="text-xl text-gray-700 mb-6">Thank you for joining Crypto University!</p>
@@ -371,87 +327,19 @@ export default function CheckoutPage() {
 
                     {step === 2 && (
                       <>
-                        <h2 className="text-2xl font-bold mb-6 text-gray-900">Payment Details</h2>
+                        <h2 className="text-2xl font-bold mb-6 text-gray-900">Payment Method</h2>
 
-                        <form onSubmit={handleSubmit}>
-                          <div className="mb-6">
-                            <label htmlFor="cardNumber" className="block text-gray-900 mb-2 flex items-center">
-                              Card Number <span className="text-primary ml-1">*</span>
-                            </label>
-                            <div className="relative">
-                              <input
-                                type="text"
-                                id="cardNumber"
-                                name="cardNumber"
-                                value={formData.cardNumber}
-                                onChange={handleChange}
-                                required
-                                maxLength={19} // 16 digits + 3 spaces
-                                className={`form-input pl-12 ${formErrors.cardNumber ? "border-red-500" : ""}`}
-                                placeholder="1234 5678 9012 3456"
-                                aria-describedby={formErrors.cardNumber ? "cardNumber-error" : undefined}
-                              />
-                              <CreditCard
-                                className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"
-                                size={20}
-                              />
-                            </div>
-                            {formErrors.cardNumber && (
-                              <p id="cardNumber-error" className="text-red-500 text-sm mt-1 flex items-center">
-                                <AlertCircle size={16} className="mr-1" /> {formErrors.cardNumber}
-                              </p>
-                            )}
-                          </div>
+                        <form onSubmit={(e) => e.preventDefault()}>
+                          <PaymentMethods
+                            amount="70.99"
+                            itemName="Crypto University Subscription"
+                            onSuccess={handlePaymentSuccess}
+                            onCancel={handlePaymentCancel}
+                            email={formData.email}
+                            name={formData.name}
+                          />
 
-                          <div className="grid grid-cols-2 gap-4 mb-6">
-                            <div>
-                              <label htmlFor="expiryDate" className="block text-gray-900 mb-2 flex items-center">
-                                Expiry Date <span className="text-primary ml-1">*</span>
-                              </label>
-                              <input
-                                type="text"
-                                id="expiryDate"
-                                name="expiryDate"
-                                value={formData.expiryDate}
-                                onChange={handleChange}
-                                required
-                                className={`form-input ${formErrors.expiryDate ? "border-red-500" : ""}`}
-                                placeholder="MM/YY"
-                                maxLength={5}
-                                aria-describedby={formErrors.expiryDate ? "expiryDate-error" : undefined}
-                              />
-                              {formErrors.expiryDate && (
-                                <p id="expiryDate-error" className="text-red-500 text-sm mt-1 flex items-center">
-                                  <AlertCircle size={16} className="mr-1" /> {formErrors.expiryDate}
-                                </p>
-                              )}
-                            </div>
-
-                            <div>
-                              <label htmlFor="cvv" className="block text-gray-900 mb-2 flex items-center">
-                                CVV <span className="text-primary ml-1">*</span>
-                              </label>
-                              <input
-                                type="text"
-                                id="cvv"
-                                name="cvv"
-                                value={formData.cvv}
-                                onChange={handleChange}
-                                required
-                                className={`form-input ${formErrors.cvv ? "border-red-500" : ""}`}
-                                placeholder="123"
-                                maxLength={4}
-                                aria-describedby={formErrors.cvv ? "cvv-error" : undefined}
-                              />
-                              {formErrors.cvv && (
-                                <p id="cvv-error" className="text-red-500 text-sm mt-1 flex items-center">
-                                  <AlertCircle size={16} className="mr-1" /> {formErrors.cvv}
-                                </p>
-                              )}
-                            </div>
-                          </div>
-
-                          <div className="mb-8">
+                          <div className="mt-6">
                             <div className="flex items-start">
                               <input
                                 type="checkbox"
@@ -490,61 +378,17 @@ export default function CheckoutPage() {
                             >
                               <ArrowLeft size={16} className="mr-1" /> Back
                             </button>
-                            <button
-                              type="submit"
-                              disabled={isSubmitting}
-                              className="btn-primary flex items-center justify-center"
-                            >
-                              {isSubmitting ? (
-                                <>
-                                  <svg
-                                    className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                  >
-                                    <circle
-                                      className="opacity-25"
-                                      cx="12"
-                                      cy="12"
-                                      r="10"
-                                      stroke="currentColor"
-                                      strokeWidth="4"
-                                    ></circle>
-                                    <path
-                                      className="opacity-75"
-                                      fill="currentColor"
-                                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                                    ></path>
-                                  </svg>
-                                  Processing...
-                                </>
-                              ) : (
-                                <>
-                                  <Lock size={20} className="mr-2" />
-                                  Complete Purchase - €70.99/month
-                                </>
-                              )}
-                            </button>
                           </div>
 
-                          <div className="mt-6 flex justify-center">
-                            <div className="flex items-center space-x-4">
-                              <Image src="/placeholder.svg?height=30&width=50" alt="Visa" width={50} height={30} />
-                              <Image
-                                src="/placeholder.svg?height=30&width=50"
-                                alt="Mastercard"
-                                width={50}
-                                height={30}
-                              />
-                              <Image src="/placeholder.svg?height=30&width=50" alt="PayPal" width={50} height={30} />
-                              <Image src="/placeholder.svg?height=30&width=50" alt="Apple Pay" width={50} height={30} />
+                          <div className="mt-6 text-center text-sm text-gray-500">
+                            <p className="mb-2">
+                              Your personal data will be used to process your order, support your experience throughout
+                              this website, and for other purposes described in our privacy policy.
+                            </p>
+                            <div className="flex items-center justify-center mt-4">
+                              <Lock size={14} className="mr-2" />
+                              <span>Your payment information is secure and encrypted</span>
                             </div>
-                          </div>
-
-                          <div className="mt-6 text-center text-sm text-gray-400 flex items-center justify-center">
-                            <Lock size={14} className="mr-2" />
-                            <span>Your payment information is secure and encrypted</span>
                           </div>
                         </form>
                       </>
@@ -556,45 +400,6 @@ export default function CheckoutPage() {
           </div>
         </div>
       </section>
-
-      {!submitSuccess && (
-        <section className="py-16 bg-white">
-          <div className="container mx-auto">
-            <div className="max-w-4xl mx-auto">
-              <h2 className="text-3xl font-bold mb-8 text-gray-900 text-center">
-                Frequently Asked <span className="text-primary">Questions</span>
-              </h2>
-
-              <div className="space-y-6">
-                <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow">
-                  <h3 className="text-xl font-bold mb-2 text-gray-900">When will I start receiving signals?</h3>
-                  <p className="text-gray-700">
-                    You'll start receiving signals immediately after your payment is processed. Our system will
-                    automatically send you login details to access our members-only platform.
-                  </p>
-                </div>
-
-                <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow">
-                  <h3 className="text-xl font-bold mb-2 text-gray-900">Can I cancel my subscription?</h3>
-                  <p className="text-gray-700">
-                    Yes, you can cancel your subscription at any time with no questions asked. There are no long-term
-                    commitments or hidden fees.
-                  </p>
-                </div>
-
-                <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow">
-                  <h3 className="text-xl font-bold mb-2 text-gray-900">Is my payment information secure?</h3>
-                  <p className="text-gray-700">
-                    Yes, we use industry-standard encryption and secure payment processors to ensure your payment
-                    information is always protected.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      )}
     </>
   )
 }
-

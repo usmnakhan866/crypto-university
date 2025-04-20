@@ -1,39 +1,42 @@
 "use client"
-
+import { useLanguage } from "@/context/language-context"
 import { Target, Video, DollarSign, GraduationCap, LifeBuoy, Lock } from "lucide-react"
 import Link from "next/link"
 
 const WhatYouGet = () => {
+  const { t } = useLanguage()
+
+  // Get benefits from translations
   const benefits = [
     {
       icon: <Target size={32} className="text-primary" />,
-      title: "Step-by-step guide",
-      description: "Set up your wallet & trading account in just a few minutes.",
+      title: t("whatYouGet.benefit1.title"),
+      description: t("whatYouGet.benefit1.description"),
     },
     {
       icon: <Video size={32} className="text-primary" />,
-      title: "Exclusive instructional video",
-      description: "Learn how to invest strategically in MemeCoins.",
+      title: t("whatYouGet.benefit2.title"),
+      description: t("whatYouGet.benefit2.description"),
     },
     {
       icon: <DollarSign size={32} className="text-primary" />,
-      title: "Affiliate program",
-      description: "Earn extra through referrals!",
+      title: t("whatYouGet.benefit3.title"),
+      description: t("whatYouGet.benefit3.description"),
     },
     {
       icon: <GraduationCap size={32} className="text-primary" />,
-      title: "Highly qualified expert team",
-      description: "For your personal questions.",
+      title: t("whatYouGet.benefit4.title"),
+      description: t("whatYouGet.benefit4.description"),
     },
     {
       icon: <LifeBuoy size={32} className="text-primary" />,
-      title: "24/7 support & assistance",
-      description: "We won't leave you alone!",
+      title: t("whatYouGet.benefit5.title"),
+      description: t("whatYouGet.benefit5.description"),
     },
     {
       icon: <Lock size={32} className="text-primary" />,
-      title: "Secure access",
-      description: "Maximize your profits with secure platform access.",
+      title: t("whatYouGet.benefit6.title"),
+      description: t("whatYouGet.benefit6.description"),
     },
   ]
 
@@ -42,10 +45,10 @@ const WhatYouGet = () => {
       <div className="container mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold mb-4 text-gray-900">
-            What You Will <span className="text-primary">Get</span>
+            {t("whatYouGet.title")} <span className="text-primary">{t("whatYouGet.highlightedTitle")}</span>
           </h2>
           <p className="text-xl text-gray-700 max-w-3xl mx-auto">
-            Everything you need to succeed in the MemeCoins market
+            {t("whatYouGet.subtitle")}
           </p>
         </div>
 
@@ -63,8 +66,12 @@ const WhatYouGet = () => {
         </div>
 
         <div className="text-center">
-          <Link href="/checkout" className="btn-primary inline-block text-xl">
-            👉 START NOW
+          <Link
+            href="/checkout"
+            className="btn-primary inline-block text-xl rounded-xl shadow-md"
+            style={{ backgroundColor: "#c20f05" }}
+          >
+            {t("nav.startNow")}
           </Link>
         </div>
       </div>
@@ -73,4 +80,3 @@ const WhatYouGet = () => {
 }
 
 export default WhatYouGet
-

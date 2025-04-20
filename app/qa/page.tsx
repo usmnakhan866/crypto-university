@@ -1,14 +1,14 @@
 "use client"
 
-import type React from "react"
-
 import { useState, useEffect } from "react"
 import { Search, ChevronDown, ChevronUp, ArrowRight, AlertCircle } from "lucide-react"
 import Link from "next/link"
+import { useLanguage } from "@/context/language-context"
 
 export default function QAPage() {
+  const { t } = useLanguage()
   const [searchQuery, setSearchQuery] = useState("")
-  const [openCategory, setOpenCategory] = useState("general")
+  const [openCategory, setOpenCategory] = useState("")
   const [openQuestions, setOpenQuestions] = useState<string[]>([])
   const [filteredCategories, setFilteredCategories] = useState<any[]>([])
   const [noResults, setNoResults] = useState(false)
@@ -16,104 +16,101 @@ export default function QAPage() {
   const faqCategories = [
     {
       id: "general",
-      name: "General Questions",
+      name: t("qa.categories.general"),
       questions: [
         {
-          id: "general-1",
-          question: "What is Crypto University?",
-          answer:
-            "Crypto University is a premium service that provides expert analysis, signals, and educational resources for cryptocurrency investors, with a special focus on MemeCoins that have high growth potential.",
+          id: "freeJoin",
+          question: t("qa.questions.freeJoin.question"),
+          answer: t("qa.questions.freeJoin.answer")
         },
         {
-          id: "general-2",
-          question: "How much does the subscription cost?",
-          answer:
-            "Our subscription is currently available at a special promotional price of €70.99 per month, reduced from the regular price of €99.99. This is a limited-time offer.",
+          id: "earnMore",
+          question: t("qa.questions.earnMore.question"),
+          answer: t("qa.questions.earnMore.answer")
         },
         {
-          id: "general-3",
-          question: "Is there a minimum subscription period?",
-          answer:
-            "No, there is no minimum subscription period. You can cancel at any time without any penalties or hidden fees.",
+          id: "whatIs",
+          question: t("qa.questions.whatIs.question"),
+          answer: t("qa.questions.whatIs.answer")
         },
-      ],
+        {
+          id: "subscriptionCost",
+          question: t("qa.questions.subscriptionCost.question"),
+          answer: t("qa.questions.subscriptionCost.answer")
+        },
+        {
+          id: "minSubscription",
+          question: t("qa.questions.minSubscription.question"),
+          answer: t("qa.questions.minSubscription.answer")
+        }
+      ]
     },
     {
       id: "signals",
-      name: "Signals & Analysis",
+      name: t("qa.categories.signals"),
       questions: [
         {
-          id: "signals-1",
-          question: "How many signals will I receive?",
-          answer:
-            "You will receive 5-7 exclusive signals daily from our team of 15 experienced analysts. These signals are carefully selected for their high potential return.",
+          id: "signalCount",
+          question: t("qa.questions.signalCount.question"),
+          answer: t("qa.questions.signalCount.answer")
         },
         {
-          id: "signals-2",
-          question: "How are the signals delivered?",
-          answer:
-            "Signals are delivered through our members-only platform, via email, and through our mobile app notifications to ensure you never miss an opportunity.",
+          id: "signalDelivery",
+          question: t("qa.questions.signalDelivery.question"),
+          answer: t("qa.questions.signalDelivery.answer")
         },
         {
-          id: "signals-3",
-          question: "What is the success rate of your signals?",
-          answer:
-            "Our signals have a proven track record with an average success rate of over 80%. Many of our past signals have resulted in 100x-1000x returns for our members.",
-        },
-      ],
+          id: "successRate",
+          question: t("qa.questions.successRate.question"),
+          answer: t("qa.questions.successRate.answer")
+        }
+      ]
     },
     {
       id: "technical",
-      name: "Technical Questions",
+      name: t("qa.categories.technical"),
       questions: [
         {
-          id: "technical-1",
-          question: "Do I need technical knowledge to follow your signals?",
-          answer:
-            "No technical knowledge is required. We provide step-by-step guides and video tutorials that make it easy for beginners to follow our signals and execute trades.",
+          id: "technicalKnowledge",
+          question: t("qa.questions.technicalKnowledge.question"),
+          answer: t("qa.questions.technicalKnowledge.answer")
         },
         {
-          id: "technical-2",
-          question: "Which exchanges do you recommend for trading MemeCoins?",
-          answer:
-            "We recommend several exchanges including Binance, Coinbase, KuCoin, and decentralized exchanges like Uniswap and PancakeSwap. Our guides will help you set up accounts on these platforms.",
+          id: "recommendedExchanges",
+          question: t("qa.questions.recommendedExchanges.question"),
+          answer: t("qa.questions.recommendedExchanges.answer")
         },
         {
-          id: "technical-3",
-          question: "How do I set up a crypto wallet?",
-          answer:
-            "We provide detailed guides for setting up various wallets including MetaMask, Trust Wallet, and others. These guides are available immediately after you subscribe.",
-        },
-      ],
+          id: "setupWallet",
+          question: t("qa.questions.setupWallet.question"),
+          answer: t("qa.questions.setupWallet.answer")
+        }
+      ]
     },
     {
       id: "support",
-      name: "Support & Assistance",
+      name: t("qa.categories.support"),
       questions: [
         {
-          id: "support-1",
-          question: "Is there customer support available?",
-          answer:
-            "Yes, we offer 24/7 customer support through live chat, email, and our members-only community. Our team is always ready to assist you with any questions or issues.",
+          id: "customerSupport",
+          question: t("qa.questions.customerSupport.question"),
+          answer: t("qa.questions.customerSupport.answer")
         },
         {
-          id: "support-2",
-          question: "Can I get personalized advice from your analysts?",
-          answer:
-            "Yes, our premium subscription includes access to our team of experts who can provide personalized guidance based on your investment goals and risk tolerance.",
+          id: "personalizedAdvice",
+          question: t("qa.questions.personalizedAdvice.question"),
+          answer: t("qa.questions.personalizedAdvice.answer")
         },
         {
-          id: "support-3",
-          question: "What if I have a technical issue with the platform?",
-          answer:
-            "Our technical support team is available 24/7 to help resolve any issues you might encounter with our platform or following our signals.",
-        },
-      ],
-    },
+          id: "technicalIssues",
+          question: t("qa.questions.technicalIssues.question"),
+          answer: t("qa.questions.technicalIssues.answer")
+        }
+      ]
+    }
   ]
 
   useEffect(() => {
-    // Filter categories and questions based on search query
     if (searchQuery.trim() === "") {
       setFilteredCategories(faqCategories)
       setNoResults(false)
@@ -122,49 +119,45 @@ export default function QAPage() {
 
     const query = searchQuery.toLowerCase()
     const filtered = faqCategories
-      .map((category) => ({
+      .map(category => ({
         ...category,
         questions: category.questions.filter(
-          (q) => q.question.toLowerCase().includes(query) || q.answer.toLowerCase().includes(query),
-        ),
+          q => q.question.toLowerCase().includes(query) || q.answer.toLowerCase().includes(query)
+        )
       }))
-      .filter((category) => category.questions.length > 0)
+      .filter(category => category.questions.length > 0)
 
     setFilteredCategories(filtered)
     setNoResults(filtered.length === 0)
   }, [searchQuery])
 
   const toggleQuestion = (id: string) => {
-    if (openQuestions.includes(id)) {
-      setOpenQuestions(openQuestions.filter((q) => q !== id))
-    } else {
-      setOpenQuestions([...openQuestions, id])
-    }
+    setOpenQuestions(prev =>
+      prev.includes(id) ? prev.filter(q => q !== id) : [...prev, id]
+    )
   }
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value)
-    // Reset open categories/questions when searching
-    if (e.target.value.trim() !== "" && openCategory !== "") {
+    if (e.target.value.trim() !== "") {
       setOpenCategory("")
-    } else if (e.target.value.trim() === "") {
+    } else {
       setOpenCategory("general")
     }
   }
 
   return (
     <>
-      {/* Breadcrumb navigation for better UX */}
       <nav className="bg-gray-100 py-3" aria-label="Breadcrumb">
         <div className="container mx-auto">
           <ol className="flex items-center space-x-2 text-sm">
             <li>
               <Link href="/" className="text-gray-400 hover:text-primary">
-                Home
+                {t("nav.home")}
               </Link>
             </li>
             <li className="text-gray-400">/</li>
-            <li className="text-gray-900 font-medium">Q&A</li>
+            <li className="text-gray-900 font-medium">{t("qa.title")}</li>
           </ol>
         </div>
       </nav>
@@ -173,53 +166,53 @@ export default function QAPage() {
         <div className="container mx-auto">
           <div className="max-w-4xl mx-auto text-center mb-16">
             <h1 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900">
-              Questions & <span className="text-primary">Answers</span>
+              {t("qa.heading")} <span className="text-primary">{t("qa.highlightedHeading")}</span>
             </h1>
-            <p className="text-xl text-gray-700">Find answers to the most common questions about our services.</p>
+            <p className="text-xl text-gray-700">{t("qa.subheading")}</p>
           </div>
 
           <div className="max-w-3xl mx-auto mb-12">
-            <div className="relative">
+            <div className="relative mb-8">
               <input
                 type="text"
-                placeholder="Search for questions..."
+                placeholder={t("qa.searchPlaceholder")}
                 value={searchQuery}
                 onChange={handleSearchChange}
-                className="form-input pl-12"
-                aria-label="Search questions"
+                className="form-input pl-12 py-3 text-gray-700 rounded-lg border-2 border-gray-300 w-full focus:ring-primary focus:border-primary transition"
               />
               <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
               {searchQuery && (
                 <button
                   className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-900"
                   onClick={() => setSearchQuery("")}
-                  aria-label="Clear search"
+                  aria-label={t("qa.clearSearch")}
                 >
                   ✕
                 </button>
               )}
             </div>
-
-            {/* Search tips */}
             <div className="mt-2 text-sm text-gray-400 flex items-center">
               <AlertCircle size={14} className="mr-1" />
-              <span>Tip: Search for keywords like "signals", "wallet", or "support"</span>
+              <span>{t("qa.searchTip")}</span>
             </div>
           </div>
 
           <div className="max-w-3xl mx-auto">
             {noResults ? (
               <div className="text-center py-12 bg-gray-900 rounded-lg">
-                <p className="text-gray-400 mb-4">No questions found matching your search.</p>
-                <button onClick={() => setSearchQuery("")} className="text-primary hover:underline">
-                  Clear search
+                <p className="text-gray-400 mb-4">{t("qa.noResults")}</p>
+                <button
+                  onClick={() => setSearchQuery("")}
+                  className="text-primary hover:underline"
+                >
+                  {t("qa.clearSearch")}
                 </button>
               </div>
             ) : (
-              filteredCategories.map((category) => (
+              filteredCategories.map(category => (
                 <div key={category.id} className="mb-8">
                   <button
-                    className="flex justify-between items-center w-full bg-white border border-gray-200 rounded-lg px-6 py-4 text-left hover:border-primary/50 transition-colors shadow-md"
+                    className="flex justify-between items-center w-full bg-white border border-gray-200 rounded-lg px-6 py-4 text-left hover:border-primary/50 transition-colors"
                     onClick={() => setOpenCategory(openCategory === category.id ? "" : category.id)}
                     aria-expanded={openCategory === category.id}
                     aria-controls={`category-${category.id}`}
@@ -231,12 +224,11 @@ export default function QAPage() {
                       <ChevronDown className="text-primary" size={20} />
                     )}
                   </button>
-
                   <div
                     id={`category-${category.id}`}
                     className={`mt-4 space-y-4 transition-all duration-300 ${openCategory === category.id ? "opacity-100" : "opacity-0 h-0 overflow-hidden"}`}
                   >
-                    {category.questions.map((item) => (
+                    {category.questions.map(item => (
                       <div
                         key={item.id}
                         className="border border-gray-800 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow"
@@ -254,7 +246,6 @@ export default function QAPage() {
                             <ChevronDown className="text-primary flex-shrink-0" size={20} />
                           )}
                         </button>
-
                         <div
                           id={`question-${item.id}`}
                           className={`transition-all duration-300 ${openQuestions.includes(item.id) ? "opacity-100" : "opacity-0 h-0 overflow-hidden"}`}
@@ -277,18 +268,18 @@ export default function QAPage() {
         <div className="container mx-auto">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl font-bold mb-6 text-gray-900">
-              Still Have <span className="text-primary">Questions?</span>
+              {t("qa.cta.title")} <span className="text-primary">{t("qa.cta.highlightedTitle")}</span>
             </h2>
             <p className="text-xl text-gray-700 mb-8">
-              Our team is here to help you with any questions you might have about our services.
+              {t("qa.cta.description")}
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <Link href="/contact" className="btn-primary flex items-center justify-center gap-2 group">
-                Contact Our Experts
+                {t("qa.cta.contact")}
                 <ArrowRight className="group-hover:translate-x-1 transition-transform" />
               </Link>
               <Link href="/checkout" className="btn-secondary flex items-center justify-center gap-2 group">
-                Start Now
+                {t("qa.cta.startNow")}
                 <ArrowRight className="group-hover:translate-x-1 transition-transform" />
               </Link>
             </div>
@@ -298,4 +289,3 @@ export default function QAPage() {
     </>
   )
 }
-

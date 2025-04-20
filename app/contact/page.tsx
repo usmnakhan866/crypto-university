@@ -1,12 +1,12 @@
 "use client"
-
 import type React from "react"
-
 import { useState } from "react"
-import { Mail, Phone, MessageSquare, Send, AlertCircle, CheckCircle } from "lucide-react"
+import { Mail, MessageSquare, Send, AlertCircle, CheckCircle, ArrowRight } from "lucide-react"
 import Link from "next/link"
+import { useLanguage } from "@/context/language-context"
 
 export default function ContactPage() {
+  const { t } = useLanguage()
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -23,6 +23,7 @@ export default function ContactPage() {
 
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitSuccess, setSubmitSuccess] = useState(false)
+  const [submitError, setSubmitError] = useState("")
 
   const validateForm = () => {
     let valid = true
@@ -33,54 +34,34 @@ export default function ContactPage() {
       message: "",
     }
 
-    // Name validation
     if (!formData.name.trim()) {
-      errors.name = "Name is required"
+      errors.name = t("contact.validationErrors.name")
       valid = false
     }
 
-    // Email validation
     if (!formData.email.trim()) {
-      errors.email = "Email is required"
+      errors.email = t("contact.validationErrors.email.required")
       valid = false
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      errors.email = "Email is invalid"
+      errors.email = t("contact.validationErrors.email.invalid")
       valid = false
     }
 
-    // Subject validation
     if (!formData.subject.trim()) {
-      errors.subject = "Subject is required"
+      errors.subject = t("contact.validationErrors.subject")
       valid = false
     }
 
-    // Message validation
     if (!formData.message.trim()) {
-      errors.message = "Message is required"
+      errors.message = t("contact.validationErrors.message.required")
       valid = false
     } else if (formData.message.trim().length < 10) {
-      errors.message = "Message must be at least 10 characters"
+      errors.message = t("contact.validationErrors.message.minLength")
       valid = false
     }
 
     setFormErrors(errors)
     return valid
-  }
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }))
-
-    // Clear error when user types
-    if (formErrors[name as keyof typeof formErrors]) {
-      setFormErrors((prev) => ({
-        ...prev,
-        [name]: "",
-      }))
-    }
   }
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -92,37 +73,57 @@ export default function ContactPage() {
 
     setIsSubmitting(true)
 
-    // Simulate form submission
-    setTimeout(() => {
-      setIsSubmitting(false)
-      setSubmitSuccess(true)
-      setFormData({
-        name: "",
-        email: "",
-        subject: "",
-        message: "",
+    // Send the form data to the API
+    fetch("/api/contact", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setIsSubmitting(false)
+        if (data.success) {
+          setSubmitSuccess(true)
+          // Reset form
+          setFormData({
+            name: "",
+            email: "",
+            subject: "",
+            message: "",
+          })
+        } else {
+          setSubmitError(data.error || t("contact.errorMessage"))
+        }
       })
+      .catch((error) => {
+        console.error("Error submitting form:", error)
+        setIsSubmitting(false)
+        setSubmitError(t("contact.errorMessage"))
+      })
+  }
 
-      // Reset success message after 5 seconds
-      setTimeout(() => {
-        setSubmitSuccess(false)
-      }, 5000)
-    }, 1500)
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }))
   }
 
   return (
     <>
-      {/* Breadcrumb navigation for better UX */}
       <nav className="bg-gray-100 py-3" aria-label="Breadcrumb">
         <div className="container mx-auto">
           <ol className="flex items-center space-x-2 text-sm">
             <li>
               <Link href="/" className="text-gray-400 hover:text-primary">
-                Home
+                {t("nav.home")}
               </Link>
             </li>
             <li className="text-gray-400">/</li>
-            <li className="text-gray-900 font-medium">Contact</li>
+            <li className="text-gray-900 font-medium">{t("contact.title")}</li>
           </ol>
         </div>
       </nav>
@@ -131,26 +132,24 @@ export default function ContactPage() {
         <div className="container mx-auto">
           <div className="max-w-4xl mx-auto text-center mb-16">
             <h1 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900">
-              Contact <span className="text-primary">Our Experts</span>
+              {t("contact.heading")} <span className="text-primary">{t("contact.highlightedTitle")}</span>
             </h1>
-            <p className="text-xl text-gray-700">
-              Have questions about our services? Our team is here to help you 24/7.
-            </p>
+            <p className="text-xl text-gray-700">{t("contact.subheading")}</p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <div className="bg-white border border-gray-200 rounded-xl p-8 text-center hover:border-primary/50 transition-colors shadow-lg">
               <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/20 mb-4">
                 <Mail size={32} className="text-primary" />
               </div>
-              <h3 className="text-xl font-bold mb-2 text-gray-900">Email Us</h3>
-              <p className="text-gray-700 mb-4">Our support team will get back to you within 24 hours.</p>
+              <h3 className="text-xl font-bold mb-2 text-gray-900">{t("contact.emailCard.title")}</h3>
+              <p className="text-gray-700 mb-4">{t("contact.emailCard.description")}</p>
               <a
-                href="mailto:support@cryptouniversity.com"
+                href={`mailto:${t("contact.emailCard.email")}`}
                 className="text-primary hover:underline inline-flex items-center"
-                aria-label="Email our support team"
+                aria-label={t("contact.emailCard.title")}
               >
-                support@cryptouniversity.com
+                {t("contact.emailCard.email")}
               </a>
             </div>
 
@@ -158,61 +157,52 @@ export default function ContactPage() {
               <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/20 mb-4">
                 <MessageSquare size={32} className="text-primary" />
               </div>
-              <h3 className="text-xl font-bold mb-2 text-gray-900">Live Chat</h3>
-              <p className="text-gray-700 mb-4">Chat with our experts in real-time for immediate assistance.</p>
-              <button
+              <h3 className="text-xl font-bold mb-2 text-gray-900">{t("contact.chatCard.title")}</h3>
+              <p className="text-gray-700 mb-4">{t("contact.chatCard.description")}</p>
+              <Link
+                href="/payment"
                 className="text-primary hover:underline inline-flex items-center"
-                aria-label="Start live chat with our support team"
+                aria-label={t("contact.chatCard.button")}
               >
-                Start Live Chat
-              </button>
-            </div>
-
-            <div className="bg-white border border-gray-200 rounded-xl p-8 text-center hover:border-primary/50 transition-colors shadow-lg">
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/20 mb-4">
-                <Phone size={32} className="text-primary" />
-              </div>
-              <h3 className="text-xl font-bold mb-2 text-gray-900">Phone Support</h3>
-              <p className="text-gray-700 mb-4">Available Monday to Friday, 9am to 5pm CET.</p>
-              <a
-                href="tel:+1234567890"
-                className="text-primary hover:underline inline-flex items-center"
-                aria-label="Call our support team"
-              >
-                +1 (234) 567-890
-              </a>
+                {t("contact.chatCard.button")}
+              </Link>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="py-16 bg-gradient-to-b from-black to-primary/10">
+      <section className="py-16 bg-white">
         <div className="container mx-auto">
-          <div className="max-w-4xl mx-auto bg-gray-900 border border-gray-800 rounded-xl p-8 shadow-lg">
-            <h2 className="text-3xl font-bold mb-6 text-white text-center">
-              Send Us a <span className="text-primary">Message</span>
-            </h2>
+          <div className="max-w-4xl mx-auto bg-white border border-gray-200 rounded-xl p-8 shadow-lg">
+            <h2 className="text-3xl font-bold mb-6 text-gray-900 text-center">{t("contact.formTitle")}</h2>
 
             {submitSuccess ? (
               <div className="bg-green-900/30 border border-green-500 text-green-400 p-6 rounded-lg text-center">
                 <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-900/50 mb-4">
                   <CheckCircle size={32} className="text-green-400" />
                 </div>
-                <h3 className="text-xl font-bold mb-2">Message Sent Successfully!</h3>
-                <p className="mb-4">Thank you for contacting us. We'll get back to you as soon as possible.</p>
-                <button
-                  onClick={() => setSubmitSuccess(false)}
-                  className="bg-green-800 hover:bg-green-700 text-white px-4 py-2 rounded-md transition-colors"
+                <h3 className="text-xl font-bold mb-2">{t("contact.successMessage.title")}</h3>
+                <p className="mb-4">{t("contact.successMessage.description")}</p>
+                <Link
+                  href="/payment"
+                  className="inline-block bg-green-800 hover:bg-green-700 text-white px-4 py-2 rounded-md transition-colors"
                 >
-                  Send Another Message
-                </button>
+                  {t("contact.successMessage.button")}
+                </Link>
               </div>
             ) : (
               <form onSubmit={handleSubmit} noValidate>
+                {submitError && (
+                  <div className="bg-red-900/30 border border-red-500 text-red-400 p-4 rounded-lg mb-6 text-center">
+                    <p>{submitError || t("contact.errorMessage")}</p>
+                  </div>
+                )}
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                   <div>
-                    <label htmlFor="name" className="block text-white mb-2 flex items-center">
-                      Your Name <span className="text-primary ml-1">*</span>
+                    <label htmlFor="name" className="block text-gray-900 mb-2 flex items-center">
+                      {t("contact.formFields.name")}{" "}
+                      <span className="text-primary ml-1">{t("contact.formFields.required")}</span>
                     </label>
                     <input
                       type="text"
@@ -222,7 +212,7 @@ export default function ContactPage() {
                       onChange={handleChange}
                       required
                       className={`form-input ${formErrors.name ? "border-red-500" : ""}`}
-                      placeholder="John Smith"
+                      placeholder={t("contact.formFields.name")}
                       aria-describedby={formErrors.name ? "name-error" : undefined}
                     />
                     {formErrors.name && (
@@ -233,8 +223,9 @@ export default function ContactPage() {
                   </div>
 
                   <div>
-                    <label htmlFor="email" className="block text-white mb-2 flex items-center">
-                      Your Email <span className="text-primary ml-1">*</span>
+                    <label htmlFor="email" className="block text-gray-900 mb-2 flex items-center">
+                      {t("contact.formFields.email")}{" "}
+                      <span className="text-primary ml-1">{t("contact.formFields.required")}</span>
                     </label>
                     <input
                       type="email"
@@ -256,8 +247,9 @@ export default function ContactPage() {
                 </div>
 
                 <div className="mb-6">
-                  <label htmlFor="subject" className="block text-white mb-2 flex items-center">
-                    Subject <span className="text-primary ml-1">*</span>
+                  <label htmlFor="subject" className="block text-gray-900 mb-2 flex items-center">
+                    {t("contact.formFields.subject")}{" "}
+                    <span className="text-primary ml-1">{t("contact.formFields.required")}</span>
                   </label>
                   <select
                     id="subject"
@@ -268,11 +260,11 @@ export default function ContactPage() {
                     className={`form-input ${formErrors.subject ? "border-red-500" : ""}`}
                     aria-describedby={formErrors.subject ? "subject-error" : undefined}
                   >
-                    <option value="">Select a subject</option>
-                    <option value="general">General Inquiry</option>
-                    <option value="support">Technical Support</option>
-                    <option value="billing">Billing Question</option>
-                    <option value="partnership">Partnership Opportunity</option>
+                    <option value="">{t("contact.formFields.selectSubject")}</option>
+                    <option value="general">{t("contact.formFields.subjectOptions.general")}</option>
+                    <option value="support">{t("contact.formFields.subjectOptions.support")}</option>
+                    <option value="billing">{t("contact.formFields.subjectOptions.billing")}</option>
+                    <option value="partnership">{t("contact.formFields.subjectOptions.partnership")}</option>
                   </select>
                   {formErrors.subject && (
                     <p id="subject-error" className="text-red-500 text-sm mt-1 flex items-center">
@@ -282,8 +274,9 @@ export default function ContactPage() {
                 </div>
 
                 <div className="mb-6">
-                  <label htmlFor="message" className="block text-white mb-2 flex items-center">
-                    Your Message <span className="text-primary ml-1">*</span>
+                  <label htmlFor="message" className="block text-gray-900 mb-2 flex items-center">
+                    {t("contact.formFields.message")}{" "}
+                    <span className="text-primary ml-1">{t("contact.formFields.required")}</span>
                   </label>
                   <textarea
                     id="message"
@@ -293,7 +286,7 @@ export default function ContactPage() {
                     required
                     rows={6}
                     className={`form-input ${formErrors.message ? "border-red-500" : ""}`}
-                    placeholder="How can we help you?"
+                    placeholder={t("contact.formFields.messagePlaceholder")}
                     aria-describedby={formErrors.message ? "message-error" : undefined}
                   ></textarea>
                   {formErrors.message && (
@@ -304,7 +297,12 @@ export default function ContactPage() {
                 </div>
 
                 <div className="text-center">
-                  <button type="submit" disabled={isSubmitting} className="btn-primary inline-flex items-center">
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="btn-primary inline-flex items-center rounded-xl shadow-md"
+                    style={{ backgroundColor: "#c20f05" }}
+                  >
                     {isSubmitting ? (
                       <>
                         <svg
@@ -327,12 +325,12 @@ export default function ContactPage() {
                             d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                           ></path>
                         </svg>
-                        Sending...
+                        {t("contact.submitButton.sending")}
                       </>
                     ) : (
                       <>
                         <Send size={20} className="mr-2" />
-                        Send Message
+                        {t("contact.submitButton.default")}
                       </>
                     )}
                   </button>
@@ -343,42 +341,22 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-gradient-to-b from-white to-primary/10">
         <div className="container mx-auto">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl font-bold mb-6 text-gray-900">
-              Frequently Asked <span className="text-primary">Questions</span>
+              {t("qa.cta.title")} <span className="text-primary">{t("qa.cta.highlightedTitle")}</span>
             </h2>
-            <p className="text-xl text-gray-700 mb-8">Can't find what you're looking for? Contact our support team.</p>
-
-            <div className="text-left space-y-6">
-              <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow">
-                <h3 className="text-xl font-bold mb-2 text-gray-900">
-                  How quickly will I receive signals after signing up?
-                </h3>
-                <p className="text-gray-700">
-                  You'll start receiving signals immediately after your subscription is confirmed. We typically send 5-7
-                  signals per day directly to your email and through our members-only platform.
-                </p>
-              </div>
-
-              <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow">
-                <h3 className="text-xl font-bold mb-2 text-gray-900">
-                  Do I need prior experience with cryptocurrency?
-                </h3>
-                <p className="text-gray-700">
-                  No prior experience is needed. Our step-by-step guides and instructional videos will walk you through
-                  everything from setting up your wallet to executing trades based on our signals.
-                </p>
-              </div>
-
-              <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow">
-                <h3 className="text-xl font-bold mb-2 text-gray-900">Can I cancel my subscription at any time?</h3>
-                <p className="text-gray-700">
-                  Yes, you can cancel your subscription at any time with no questions asked. There are no long-term
-                  commitments or hidden fees.
-                </p>
-              </div>
+            <p className="text-xl text-gray-700 mb-8">{t("qa.cta.description")}</p>
+            <div className="flex flex-col sm:flex-row justify-center gap-4">
+              <Link href="/contact" className="btn-primary flex items-center justify-center gap-2 group">
+                {t("qa.cta.contact")}
+                <ArrowRight className="group-hover:translate-x-1 transition-transform" />
+              </Link>
+              <Link href="/checkout" className="btn-secondary flex items-center justify-center gap-2 group">
+                {t("qa.cta.startNow")}
+                <ArrowRight className="group-hover:translate-x-1 transition-transform" />
+              </Link>
             </div>
           </div>
         </div>
@@ -386,4 +364,3 @@ export default function ContactPage() {
     </>
   )
 }
-

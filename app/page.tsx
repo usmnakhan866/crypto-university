@@ -6,6 +6,8 @@ import ReviewsSection from "@/components/reviews-section"
 import ResultsSection from "@/components/results-section"
 import WhatToExpect from "@/components/what-to-expect"
 import WhatYouGet from "@/components/what-you-get"
+import DetailedResults from "@/components/detailed-results"
+import FAQSection from "@/components/faq-section"
 
 export default function Home() {
   return (
@@ -17,11 +19,12 @@ export default function Home() {
           <div className="section-divider" />
         </div>
       </div>
-      <ReviewsSection />
       <ResultsSection />
+      <DetailedResults />
+      <ReviewsSection />
       <WhatToExpect />
       <WhatYouGet />
+      <FAQSection />
     </>
   )
 }
-

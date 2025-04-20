@@ -1,70 +1,114 @@
 "use client"
 
-import { createContext, useContext, useState, useEffect, type ReactNode } from "react"
+import { createContext, useContext, useState, useEffect, type ReactNode, useCallback, useMemo } from "react"
 import { translations } from "@/translations"
 
+type Language = "en" | "de"
+type TranslationKey = string
+
 type LanguageContextType = {
-  language: string
-  setLanguage: (lang: string) => void
-  t: (key: string) => string
+  language: Language
+  setLanguage: (lang: Language) => void
+  t: (key: TranslationKey, options?: { returnObjects?: boolean }) => any
 }
 
-const LanguageContext = createContext<LanguageContextType>({
-  language: "en",
-  setLanguage: () => {},
-  t: () => "",
-})
+const LanguageContext = createContext<LanguageContextType | undefined>(undefined)
 
-export const useLanguage = () => useContext(LanguageContext)
+export const useLanguage = () => {
+  const context = useContext(LanguageContext)
+  if (context === undefined) {
+    throw new Error("useLanguage must be used within a LanguageProvider")
+  }
+  return context
+}
 
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
-  const [language, setLanguageState] = useState("en")
+  const [language, setLanguageState] = useState<Language>("en")
 
-  // Initialize language from localStorage if available
+  // Initialize language from localStorage or browser
   useEffect(() => {
-    const savedLanguage = localStorage.getItem("language")
-    if (savedLanguage) {
-      setLanguageState(savedLanguage)
-    } else {
-      // Try to detect browser language
-      const browserLang = navigator.language.split("-")[0]
-      if (["en", "de", "es"].includes(browserLang)) {
-        setLanguageState(browserLang)
+    const initializeLanguage = () => {
+      try {
+        // Check localStorage first
+        const savedLanguage = localStorage.getItem("language") as Language | null
+        if (savedLanguage && ["en", "de"].includes(savedLanguage)) {
+          setLanguageState(savedLanguage)
+          return
+        }
+
+        // Fallback to browser language detection
+        const browserLang = navigator.language.split("-")[0] as Language
+        if (["en", "de"].includes(browserLang)) {
+          setLanguageState(browserLang)
+        }
+      } catch (error) {
+        console.error("Language initialization error:", error)
+        setLanguageState("en")
       }
+    }
+
+    initializeLanguage()
+  }, [])
+
+  // Improved nested translation lookup with safe object handling
+  const getTranslation = useCallback((key: string, lang: Language, returnObjects = false): any => {
+    const keys = key.split(".")
+    let current: any = translations[lang]
+
+    for (const k of keys) {
+      if (!current || typeof current !== "object") {
+        // If we can't find the key in the current language, fall back to English
+        if (lang !== "en") {
+          return getTranslation(key, "en", returnObjects)
+        }
+        return key // Last resort: return the key itself
+      }
+      current = current[k]
+    }
+
+    if (current === undefined) {
+      // If we can't find the key in the current language, fall back to English
+      if (lang !== "en") {
+        return getTranslation(key, "en", returnObjects)
+      }
+      return key // Last resort: return the key itself
+    }
+
+    return current
+  }, [])
+
+  // Memoized translation function with proper dependencies
+  const t = useCallback(
+    (key: TranslationKey, options?: { returnObjects?: boolean }): any => {
+      const returnObjects = options?.returnObjects || false
+      return getTranslation(key, language, returnObjects)
+    },
+    [language, getTranslation],
+  )
+
+  // Memoized setLanguage to prevent unnecessary re-renders
+  const setLanguage = useCallback((lang: Language) => {
+    try {
+      if (["en", "de"].includes(lang)) {
+        setLanguageState(lang)
+        localStorage.setItem("language", lang)
+      } else {
+        console.warn(`Attempted to set unsupported language: ${lang}`)
+      }
+    } catch (error) {
+      console.error("Error saving language preference:", error)
     }
   }, [])
 
-  // Save language preference to localStorage
-  const setLanguage = (lang: string) => {
-    setLanguageState(lang)
-    localStorage.setItem("language", lang)
-  }
+  // Memoize the context value to prevent unnecessary re-renders
+  const contextValue = useMemo(
+    () => ({
+      language,
+      setLanguage,
+      t,
+    }),
+    [language, setLanguage, t],
+  )
 
-  // Translation function
-  const t = (key: string): string => {
-    const keys = key.split(".")
-    let value: any = translations[language]
-
-    for (const k of keys) {
-      if (value && value[k]) {
-        value = value[k]
-      } else {
-        // Fallback to English if translation is missing
-        let fallback = translations["en"]
-        for (const fk of keys) {
-          if (fallback && fallback[fk]) {
-            fallback = fallback[fk]
-          } else {
-            return key // Return the key if no translation found
-          }
-        }
-        return typeof fallback === "string" ? fallback : key
-      }
-    }
-
-    return typeof value === "string" ? value : key
-  }
-
-  return <LanguageContext.Provider value={{ language, setLanguage, t }}>{children}</LanguageContext.Provider>
+  return <LanguageContext.Provider value={contextValue}>{children}</LanguageContext.Provider>
 }
-

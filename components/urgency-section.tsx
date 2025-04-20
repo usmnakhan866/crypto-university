@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { Clock, ArrowRight } from "lucide-react"
+import { Clock } from "lucide-react"
 import { useLanguage } from "@/context/language-context"
 
 const UrgencySection = () => {
@@ -32,8 +32,8 @@ const UrgencySection = () => {
           <div className="mb-6">
             <p className="text-xl mb-2 text-gray-700">{t("urgency.noSubscription")}</p>
             <div className="flex flex-col md:flex-row items-center justify-center gap-4 mb-4">
-              <span className="text-gray-500 line-through text-2xl">{t("urgency.regularPrice")}</span>
-              <span className="text-primary text-4xl font-bold">{t("urgency.discountPrice")}</span>
+              <span className="text-red-600 line-through text-2xl">{t("urgency.regularPrice")}</span>
+              <span className="text-green-600 text-4xl font-bold">{t("urgency.discountPrice")}</span>
               <span className="text-gray-900 text-2xl">{t("urgency.perMonth")}</span>
             </div>
             <div className="flex items-center justify-center text-yellow-600 mb-4">
@@ -48,10 +48,10 @@ const UrgencySection = () => {
           </div>
           <Link
             href="/checkout"
-            className="btn-primary inline-flex items-center justify-center gap-2 text-xl group px-8 py-4"
+            className="btn-primary inline-flex items-center justify-center gap-2 text-lg group px-6 py-3 rounded-xl shadow-md"
+            style={{ backgroundColor: "#c20f05" }}
           >
-            👉 {t("urgency.startNow")}
-            <ArrowRight className="group-hover:translate-x-1 transition-transform" />
+            START NOW
           </Link>
 
           {/* Add trust badges */}
@@ -63,7 +63,7 @@ const UrgencySection = () => {
               <p className="text-sm text-gray-700">✓ {t("urgency.cancelAnytime")}</p>
             </div>
             <div className="bg-white px-3 py-1 rounded-md border border-gray-200">
-              <p className="text-sm text-gray-700">💰 {t("urgency.moneyBack")}</p>
+              <p className="text-sm text-gray-700">💰 Guaranteed Results</p>
             </div>
           </div>
         </div>
@@ -73,4 +73,3 @@ const UrgencySection = () => {
 }
 
 export default UrgencySection
-

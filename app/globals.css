@@ -53,11 +53,11 @@ body {
   }
 
   .btn-primary {
-    @apply bg-[#c20f05] hover:bg-[#a00c04] text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 text-lg shadow-md hover:shadow-lg focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-white;
+    @apply bg-[#c20f05] hover:bg-[#a00c04] text-white font-bold py-3 px-6 rounded-xl transition-all duration-300 text-lg shadow-md hover:shadow-lg focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-white;
   }
 
   .btn-secondary {
-    @apply bg-white border-2 border-primary text-primary hover:bg-primary/5 font-bold py-3 px-6 rounded-lg transition-all duration-300 text-lg shadow-md hover:shadow-lg focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-white;
+    @apply bg-white border-2 border-primary text-primary hover:bg-primary/5 font-bold py-3 px-6 rounded-xl transition-all duration-300 text-lg shadow-md hover:shadow-lg focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-white;
   }
 
   .section {
@@ -116,4 +116,3 @@ body {
     scrollbar-width: none;
   }
 }
-

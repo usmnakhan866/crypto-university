@@ -1,55 +1,57 @@
 "use client"
+import { useLanguage } from "@/context/language-context"
 
-import { useState, useRef } from "react"
 import Image from "next/image"
-import Link from "next/link"
+import { useRef, useState } from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 
 const ResultsSection = () => {
+  const { t } = useLanguage()
   const scrollContainerRef = useRef<HTMLDivElement>(null)
   const [showLeftButton, setShowLeftButton] = useState(false)
   const [showRightButton, setShowRightButton] = useState(true)
 
+  // Define a static array of results instead of using translations
   const results = [
     {
-      coin: "PEPE",
-      profit: "+1,240%",
-      image: "/placeholder.svg?height=100&width=100",
+      coin: "CryptoPunks",
+      profit: "+690.76%",
+      image: "crypto%20punk.jpg-ZUJIaLyRVLkBpkMfbDmFeyL1nlYPvs.jpeg",
     },
     {
-      coin: "FLOKI",
-      profit: "+860%",
-      image: "/placeholder.svg?height=100&width=100",
+      coin: "OFFICIAL DOGE CAUCUS",
+      profit: "+323.96%",
+      image: "doge.jpg-zB7g6ZZ1ostK4Q4odYQUBk8B2Jhu1Q.jpeg",
     },
     {
-      coin: "SHIB",
-      profit: "+2,100%",
-      image: "/placeholder.svg?height=100&width=100",
+      coin: "fry/SOL",
+      profit: "+136.11%",
+      image: "fry%20sol.jpg-oPPb6El0mx8vh2MJaxsVkMHZAF6nHN.jpeg",
     },
     {
-      coin: "DOGE",
-      profit: "+950%",
-      image: "/placeholder.svg?height=100&width=100",
+      coin: "Qwen/SOL",
+      profit: "+421.10%",
+      image: "Qwen.jpg-kXVEQ9eUgnKUKMRAgXSzySsrGE9nVL.jpeg",
     },
     {
-      coin: "BONK",
-      profit: "+1,750%",
-      image: "/placeholder.svg?height=100&width=100",
+      coin: "Woolly Mouse",
+      profit: "+70.46%",
+      image: "wolly%20mouse.jpg-tv6wocJuFtxgvtcKJgXaxtDgL6TL4T.jpeg",
     },
     {
-      coin: "WIF",
-      profit: "+1,320%",
-      image: "/placeholder.svg?height=100&width=100",
+      coin: "titcoin/SOL",
+      profit: "+187.73%",
+      image: "ttcoin.jpg-ZJcO3vQQgKonEuwbJq4SRA80ujzYHH.jpeg",
     },
     {
-      coin: "MEME",
-      profit: "+890%",
-      image: "/placeholder.svg?height=100&width=100",
+      coin: "DJ Daniel",
+      profit: "+83.96%",
+      image: "Dj_daniel.jpg-ETwxAQFDJef0ITNloC3kS4zzJVgmEu.jpeg",
     },
     {
-      coin: "TURBO",
-      profit: "+1,480%",
-      image: "/placeholder.svg?height=100&width=100",
+      coin: "DOWN/SOL",
+      profit: "+100.64%",
+      image: "Down%20sol.jpg-yLRmYsxHJZcRCxWMd9ltYRKMo2sy1l.jpeg",
     },
   ]
 
@@ -88,55 +90,51 @@ const ResultsSection = () => {
       <div className="container mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold mb-4 text-gray-900">
-            Our <span className="text-primary">Results</span> Speak for Themselves
+            {t("results.title")} <span className="text-primary">{t("results.highlightedTitle")}</span>{" "}
+            {t("results.subtitle")}
           </h2>
-          <p className="text-xl text-gray-700 max-w-3xl mx-auto">
-            Here are some of our recent successful signals that our members profited from
-          </p>
+          <p className="text-xl text-gray-700 max-w-3xl mx-auto">{t("results.description")}</p>
         </div>
 
         <div className="relative mb-10">
-          {/* Left scroll button */}
           {showLeftButton && (
             <button
               onClick={() => scroll("left")}
               className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 bg-white rounded-full p-2 shadow-lg border border-gray-200 hover:bg-gray-50 transition-colors"
-              aria-label="Scroll left"
+              aria-label={t("results.scrollLeft")}
             >
               <ChevronLeft size={24} className="text-gray-600" />
             </button>
           )}
 
-          {/* Right scroll button */}
           {showRightButton && (
             <button
               onClick={() => scroll("right")}
               className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 bg-white rounded-full p-2 shadow-lg border border-gray-200 hover:bg-gray-50 transition-colors"
-              aria-label="Scroll right"
+              aria-label={t("results.scrollRight")}
             >
               <ChevronRight size={24} className="text-gray-600" />
             </button>
           )}
 
-          {/* Scrollable container */}
           <div
             ref={scrollContainerRef}
             className="flex overflow-x-auto gap-6 pb-4 scrollbar-hide snap-x snap-mandatory"
             onScroll={handleScroll}
             style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
           >
-            {results.map((result, index) => (
+            {results.map((result: any, index: number) => (
               <div
                 key={index}
                 className="min-w-[220px] max-w-[220px] bg-white border border-gray-200 rounded-xl p-6 text-center hover:border-primary/50 transition-colors shadow-md hover:shadow-lg snap-start"
               >
                 <div className="flex justify-center mb-4">
                   <Image
-                    src={result.image || "/placeholder.svg"}
+                    src={`https://hebbkx1anhila5yf.public.blob.vercel-storage.com/${result.image}`}
                     alt={result.coin}
                     width={80}
                     height={80}
-                    className="rounded-full"
+                    className="rounded-full h-20 w-20 object-cover"
                   />
                 </div>
                 <h4 className="font-bold text-gray-900 text-xl mb-2">{result.coin}</h4>
@@ -145,16 +143,9 @@ const ResultsSection = () => {
             ))}
           </div>
         </div>
-
-        <div className="text-center">
-          <Link href="/checkout" className="btn-primary inline-block text-xl">
-            👉 START NOW
-          </Link>
-        </div>
       </div>
     </section>
   )
 }
 
 export default ResultsSection
-
