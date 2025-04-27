@@ -29,13 +29,9 @@ const Footer = () => {
                 height={60}
                 className="mr-2"
               />
-              <span className="text-xl font-bold text-gray-900">
-                {t("brand.name")}
-              </span>
+              <span className="text-xl font-bold text-gray-900">{t("brand.name")}</span>
             </Link>
-            <p className="text-gray-600 mb-4">
-              {t("brand.description")}
-            </p>
+            <p className="text-gray-600 mb-4">{t("brand.description")}</p>
             <div className="flex space-x-4">
               <a
                 href="https://www.instagram.com/memecoin_agents?igsh=YzRpajl0czRybzA0&utm_source=qr"
@@ -55,9 +51,9 @@ const Footer = () => {
               >
                 <Twitter size={20} />
               </a>
-              <a 
-                href="#" 
-                className="text-gray-500 hover:text-primary transition-colors" 
+              <a
+                href="#"
+                className="text-gray-500 hover:text-primary transition-colors"
                 aria-label={t("accessibility.telegram")}
               >
                 <Send size={20} />

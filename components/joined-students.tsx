@@ -1,5 +1,4 @@
 import Image from "next/image"
-import { useLanguage } from "@/context/language-context"
 
 const JoinedStudents = () => {
   // In a real implementation, these would be actual student images

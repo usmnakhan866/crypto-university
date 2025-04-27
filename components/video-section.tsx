@@ -28,16 +28,14 @@ const VideoSection = () => {
 
   // Video URL
   const videoUrl = "https://drive.google.com/file/d/1FDKsI94ok6MCD3IgVlbef9jOLReteZZT/preview"
-  
+
   // Using your Imgur link (added .jpg extension for better compatibility)
   const thumbnailUrl = "https://i.imgur.com/y3UEMbq.jpg"
 
   return (
     <section className="py-16 bg-white">
       <div className="container mx-auto max-w-6xl text-center">
-        <h1 className="text-[2.5rem] md:text-[3.5rem] font-bold text-[#1a2b3b] mb-4">
-          {t("videoSection.title")}
-        </h1>
+        <h1 className="text-[2.5rem] md:text-[3.5rem] font-bold text-[#1a2b3b] mb-4">{t("videoSection.title")}</h1>
         <p className="text-xl text-gray-600 mb-4">{t("videoSection.subtitle1")}</p>
         <p className="text-xl text-gray-800 font-semibold mb-4">{t("videoSection.subtitle2")}</p>
         <div className="flex justify-center mb-8">
@@ -49,11 +47,11 @@ const VideoSection = () => {
           {!isPlaying ? (
             <div
               className="absolute inset-0 bg-cover bg-center cursor-pointer"
-              style={{ 
+              style={{
                 backgroundImage: `url('${thumbnailUrl}')`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                backgroundRepeat: 'no-repeat'
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
               }}
               onClick={playVideo}
             >

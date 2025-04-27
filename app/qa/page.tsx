@@ -1,5 +1,7 @@
 "use client"
 
+import type React from "react"
+
 import { useState, useEffect } from "react"
 import { Search, ChevronDown, ChevronUp, ArrowRight, AlertCircle } from "lucide-react"
 import Link from "next/link"
@@ -19,95 +21,69 @@ export default function QAPage() {
       name: t("qa.categories.general"),
       questions: [
         {
-          id: "freeJoin",
-          question: t("qa.questions.freeJoin.question"),
-          answer: t("qa.questions.freeJoin.answer")
+          id: "experienceNeeded",
+          question: t("qa.questions.experienceNeeded.question"),
+          answer: t("qa.questions.experienceNeeded.answer"),
         },
         {
-          id: "earnMore",
-          question: t("qa.questions.earnMore.question"),
-          answer: t("qa.questions.earnMore.answer")
+          id: "startingCapital",
+          question: t("qa.questions.startingCapital.question"),
+          answer: t("qa.questions.startingCapital.answer"),
         },
         {
-          id: "whatIs",
-          question: t("qa.questions.whatIs.question"),
-          answer: t("qa.questions.whatIs.answer")
+          id: "getHelp",
+          question: t("qa.questions.getHelp.question"),
+          answer: t("qa.questions.getHelp.answer"),
         },
         {
-          id: "subscriptionCost",
-          question: t("qa.questions.subscriptionCost.question"),
-          answer: t("qa.questions.subscriptionCost.answer")
+          id: "earningTimeframe",
+          question: t("qa.questions.earningTimeframe.question"),
+          answer: t("qa.questions.earningTimeframe.answer"),
         },
         {
-          id: "minSubscription",
-          question: t("qa.questions.minSubscription.question"),
-          answer: t("qa.questions.minSubscription.answer")
-        }
-      ]
-    },
-    {
-      id: "signals",
-      name: t("qa.categories.signals"),
-      questions: [
-        {
-          id: "signalCount",
-          question: t("qa.questions.signalCount.question"),
-          answer: t("qa.questions.signalCount.answer")
+          id: "howItWorks",
+          question: t("qa.questions.howItWorks.question"),
+          answer: t("qa.questions.howItWorks.answer"),
         },
-        {
-          id: "signalDelivery",
-          question: t("qa.questions.signalDelivery.question"),
-          answer: t("qa.questions.signalDelivery.answer")
-        },
-        {
-          id: "successRate",
-          question: t("qa.questions.successRate.question"),
-          answer: t("qa.questions.successRate.answer")
-        }
-      ]
+      ],
     },
     {
       id: "technical",
       name: t("qa.categories.technical"),
       questions: [
         {
-          id: "technicalKnowledge",
-          question: t("qa.questions.technicalKnowledge.question"),
-          answer: t("qa.questions.technicalKnowledge.answer")
+          id: "monthlyPayment",
+          question: t("qa.questions.monthlyPayment.question"),
+          answer: t("qa.questions.monthlyPayment.answer"),
         },
         {
-          id: "recommendedExchanges",
-          question: t("qa.questions.recommendedExchanges.question"),
-          answer: t("qa.questions.recommendedExchanges.answer")
+          id: "paymentProcess",
+          question: t("qa.questions.paymentProcess.question"),
+          answer: t("qa.questions.paymentProcess.answer"),
         },
         {
-          id: "setupWallet",
-          question: t("qa.questions.setupWallet.question"),
-          answer: t("qa.questions.setupWallet.answer")
-        }
-      ]
+          id: "timeInvestment",
+          question: t("qa.questions.timeInvestment.question"),
+          answer: t("qa.questions.timeInvestment.answer"),
+        },
+      ],
     },
     {
-      id: "support",
-      name: t("qa.categories.support"),
+      id: "signals",
+      name: t("qa.categories.signals"),
       questions: [
         {
-          id: "customerSupport",
-          question: t("qa.questions.customerSupport.question"),
-          answer: t("qa.questions.customerSupport.answer")
+          id: "freeJoin",
+          question: t("qa.questions.freeJoin.question"),
+          answer: t("qa.questions.freeJoin.answer"),
         },
         {
-          id: "personalizedAdvice",
-          question: t("qa.questions.personalizedAdvice.question"),
-          answer: t("qa.questions.personalizedAdvice.answer")
+          id: "earnMore",
+          question: t("qa.questions.earnMore.question"),
+          answer: t("qa.questions.earnMore.answer"),
         },
-        {
-          id: "technicalIssues",
-          question: t("qa.questions.technicalIssues.question"),
-          answer: t("qa.questions.technicalIssues.answer")
-        }
-      ]
-    }
+      ],
+    },
   ]
 
   useEffect(() => {
@@ -119,22 +95,20 @@ export default function QAPage() {
 
     const query = searchQuery.toLowerCase()
     const filtered = faqCategories
-      .map(category => ({
+      .map((category) => ({
         ...category,
         questions: category.questions.filter(
-          q => q.question.toLowerCase().includes(query) || q.answer.toLowerCase().includes(query)
-        )
+          (q) => q.question.toLowerCase().includes(query) || q.answer.toLowerCase().includes(query),
+        ),
       }))
-      .filter(category => category.questions.length > 0)
+      .filter((category) => category.questions.length > 0)
 
     setFilteredCategories(filtered)
     setNoResults(filtered.length === 0)
   }, [searchQuery])
 
   const toggleQuestion = (id: string) => {
-    setOpenQuestions(prev =>
-      prev.includes(id) ? prev.filter(q => q !== id) : [...prev, id]
-    )
+    setOpenQuestions((prev) => (prev.includes(id) ? prev.filter((q) => q !== id) : [...prev, id]))
   }
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -201,15 +175,12 @@ export default function QAPage() {
             {noResults ? (
               <div className="text-center py-12 bg-gray-900 rounded-lg">
                 <p className="text-gray-400 mb-4">{t("qa.noResults")}</p>
-                <button
-                  onClick={() => setSearchQuery("")}
-                  className="text-primary hover:underline"
-                >
+                <button onClick={() => setSearchQuery("")} className="text-primary hover:underline">
                   {t("qa.clearSearch")}
                 </button>
               </div>
             ) : (
-              filteredCategories.map(category => (
+              filteredCategories.map((category) => (
                 <div key={category.id} className="mb-8">
                   <button
                     className="flex justify-between items-center w-full bg-white border border-gray-200 rounded-lg px-6 py-4 text-left hover:border-primary/50 transition-colors"
@@ -228,7 +199,7 @@ export default function QAPage() {
                     id={`category-${category.id}`}
                     className={`mt-4 space-y-4 transition-all duration-300 ${openCategory === category.id ? "opacity-100" : "opacity-0 h-0 overflow-hidden"}`}
                   >
-                    {category.questions.map(item => (
+                    {category.questions.map((item) => (
                       <div
                         key={item.id}
                         className="border border-gray-800 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow"
@@ -270,9 +241,7 @@ export default function QAPage() {
             <h2 className="text-3xl font-bold mb-6 text-gray-900">
               {t("qa.cta.title")} <span className="text-primary">{t("qa.cta.highlightedTitle")}</span>
             </h2>
-            <p className="text-xl text-gray-700 mb-8">
-              {t("qa.cta.description")}
-            </p>
+            <p className="text-xl text-gray-700 mb-8">{t("qa.cta.description")}</p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <Link href="/contact" className="btn-primary flex items-center justify-center gap-2 group">
                 {t("qa.cta.contact")}

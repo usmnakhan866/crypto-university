@@ -26,7 +26,7 @@ const FAQSection = () => {
         </div>
 
         <div className="max-w-3xl mx-auto">
-          {faqs.map((faq: { question: string, answer: string }, index: number) => (
+          {faqs.map((faq: { question: string; answer: string }, index: number) => (
             <div
               key={index}
               className="mb-4 border border-gray-200 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow"

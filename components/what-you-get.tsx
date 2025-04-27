@@ -47,9 +47,7 @@ const WhatYouGet = () => {
           <h2 className="text-3xl font-bold mb-4 text-gray-900">
             {t("whatYouGet.title")} <span className="text-primary">{t("whatYouGet.highlightedTitle")}</span>
           </h2>
-          <p className="text-xl text-gray-700 max-w-3xl mx-auto">
-            {t("whatYouGet.subtitle")}
-          </p>
+          <p className="text-xl text-gray-700 max-w-3xl mx-auto">{t("whatYouGet.subtitle")}</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
