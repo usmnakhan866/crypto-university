@@ -120,71 +120,80 @@ export const translations = {
       ],
     },
 
-   qa: {
-  title: "Questions & Answers",
-  heading: "Questions &",
-  highlightedHeading: "Answers",
-  subheading: "Find answers to the most common questions about our services.",
-  searchPlaceholder: "Search for questions...",
-  searchTip: "Tip: Search for keywords like 'signals', 'wallet', or 'support'",
-  noResults: "No questions found matching your search.",
-  clearSearch: "Clear search",
-  categories: {
-    general: "General Questions",
-    signals: "Signals & Analysis",
-    technical: "Technical Questions",
-    support: "Support & Assistance",
-  },
-  questions: {
-    experienceNeeded: {
-      question: "Do I need experience in the crypto field?",
-      answer: "No, you don't need any experience. We'll explain everything that will be NECESSARY for you in DETAIL. Our experienced team will handle the analysis, market research, and updates for you!"
+    qa: {
+      title: "Questions & Answers",
+      heading: "Questions &",
+      highlightedHeading: "Answers",
+      subheading: "Find answers to the most common questions about our services.",
+      searchPlaceholder: "Search for questions...",
+      searchTip: "Tip: Search for keywords like 'signals', 'wallet', or 'support'",
+      noResults: "No questions found matching your search.",
+      clearSearch: "Clear search",
+      categories: {
+        general: "General Questions",
+        signals: "Signals & Analysis",
+        technical: "Technical Questions",
+        support: "Support & Assistance",
+      },
+      questions: {
+        experienceNeeded: {
+          question: "Do I need experience in the crypto field?",
+          answer:
+            "No, you don't need any experience. We'll explain everything that will be NECESSARY for you in DETAIL. Our experienced team will handle the analysis, market research, and updates for you!",
+        },
+        startingCapital: {
+          question: "How much starting capital do I need?",
+          answer:
+            "Apart from the participation fee of €70.99, which you can pay monthly as long as you want to remain part of the network, you're free to decide how much capital you want to start with! Whether it's €10 or €10,000, it doesn't matter.",
+        },
+        getHelp: {
+          question: "Will I get help if I don't understand something?",
+          answer:
+            "You'll have a specialized team behind you that you can always reach, and they'll help you with EVERY concern!",
+        },
+        earningTimeframe: {
+          question: "How long until I start earning money?",
+          answer:
+            "From the day you pay the participation fee, you'll IMMEDIATELY become part of the network and be added to the premium group! You'll receive the next signals RIGHT AWAY and can start earning money with them!",
+        },
+        howItWorks: {
+          question: "How exactly does your system work?",
+          answer:
+            "We have a premium Telegram group where we post memecoin signals after thorough analysis by our team. For each coin, we additionally provide a REAL-TIME BUY CONFIRMATION and also share exactly when you should close the position so you can make maximum profit!",
+        },
+        monthlyPayment: {
+          question: "Do I have to pay monthly?",
+          answer:
+            "You only pay AS LONG AS YOU WANT! For participation in the exclusive group, there's a fee of ONLY €70.99 (from €99.99) for a limited time. IF you join NOW, you'll pay only €70.99 monthly as long as you want to BENEFIT from the premium signals (until you want to leave).",
+        },
+        paymentProcess: {
+          question: "How does the payment process work?",
+          answer: "You can conveniently pay via PayPal, credit card, bank transfer, or even through Klarna.",
+        },
+        timeInvestment: {
+          question: "How much time do I need to invest?",
+          answer:
+            "You'll receive signals DAILY and can use them! Since we'll give you the BUY and SELL confirmations, you'll ultimately only need to invest a few minutes for buying and selling the signals... It depends on how many signals you'll use daily. You can use the signals anytime or skip them! Average actual working time: 30-60 minutes per day.",
+        },
+        freeJoin: {
+          question: "How can I join for FREE?",
+          answer:
+            "By referring 3 people to our premium group and thus the exclusive signals! If they join through YOU, you save the participation fee of €70.99 for AT LEAST 1 month! As long as the 3 people remain part of the group, you also remain part of the network for FREE and benefit from the signals!",
+        },
+        earnMore: {
+          question: "How can I earn ADDITIONAL money?",
+          answer:
+            "From the day you're in the group, you can generate ADDITIONAL INCOME to your Memecoin investments by earning €20.00 per referred person who joins, PER MONTH, PER PERSON (as long as the person remains in the group). For the 3rd person you get €70.00 instead of €60.00 (€20 x 3)! For the 4th and 5th person, €20.00 each, and for the 6th person you get €140 instead of €120 (€20 x 6)! MONTHLY (as long as all people remain part of the group)",
+        },
+      },
+      cta: {
+        title: "Still have",
+        highlightedTitle: "questions?",
+        description: "Our team is happy to help you with any questions about our services.",
+        contact: "Contact our experts",
+        startNow: "Start now",
+      },
     },
-    startingCapital: {
-      question: "How much starting capital do I need?",
-      answer: "Apart from the participation fee of €70.99, which you can pay monthly as long as you want to remain part of the network, you're free to decide how much capital you want to start with! Whether it's €10 or €10,000, it doesn't matter."
-    },
-    getHelp: {
-      question: "Will I get help if I don't understand something?",
-      answer: "You'll have a specialized team behind you that you can always reach, and they'll help you with EVERY concern!"
-    },
-    earningTimeframe: {
-      question: "How long until I start earning money?",
-      answer: "From the day you pay the participation fee, you'll IMMEDIATELY become part of the network and be added to the premium group! You'll receive the next signals RIGHT AWAY and can start earning money with them!"
-    },
-    howItWorks: {
-      question: "How exactly does your system work?",
-      answer: "We have a premium Telegram group where we post memecoin signals after thorough analysis by our team. For each coin, we additionally provide a REAL-TIME BUY CONFIRMATION and also share exactly when you should close the position so you can make maximum profit!"
-    },
-    monthlyPayment: {
-      question: "Do I have to pay monthly?",
-      answer: "You only pay AS LONG AS YOU WANT! For participation in the exclusive group, there's a fee of ONLY €70.99 (from €99.99) for a limited time. IF you join NOW, you'll pay only €70.99 monthly as long as you want to BENEFIT from the premium signals (until you want to leave)."
-    },
-    paymentProcess: {
-      question: "How does the payment process work?",
-      answer: "You can conveniently pay via PayPal, credit card, bank transfer, or even through Klarna."
-    },
-    timeInvestment: {
-      question: "How much time do I need to invest?",
-      answer: "You'll receive signals DAILY and can use them! Since we'll give you the BUY and SELL confirmations, you'll ultimately only need to invest a few minutes for buying and selling the signals... It depends on how many signals you'll use daily. You can use the signals anytime or skip them! Average actual working time: 30-60 minutes per day."
-    },
-    freeJoin: {
-      question: "How can I join for FREE?",
-      answer: "By referring 3 people to our premium group and thus the exclusive signals! If they join through YOU, you save the participation fee of €70.99 for AT LEAST 1 month! As long as the 3 people remain part of the group, you also remain part of the network for FREE and benefit from the signals!"
-    },
-    earnMore: {
-      question: "How can I earn ADDITIONAL money?",
-      answer: "From the day you're in the group, you can generate ADDITIONAL INCOME to your Memecoin investments by earning €20.00 per referred person who joins, PER MONTH, PER PERSON (as long as the person remains in the group). For the 3rd person you get €70.00 instead of €60.00 (€20 x 3)! For the 4th and 5th person, €20.00 each, and for the 6th person you get €140 instead of €120 (€20 x 6)! MONTHLY (as long as all people remain part of the group)"
-    }
-  },
-  cta: {
-    title: "Still have",
-    highlightedTitle: "questions?",
-    description: "Our team is happy to help you with any questions about our services.",
-    contact: "Contact our experts",
-    startNow: "Start now",
-  },
-},
     whatToExpect: {
       title: "What You Can",
       highlightedTitle: "Expect",
@@ -453,71 +462,81 @@ export const translations = {
       cancelAnytime: "Jederzeit kündbar",
       moneyBack: "Geld-zurück-Garantie",
     },
-   qa: {
-  title: "Fragen & Antworten",
-  heading: "Fragen &",
-  highlightedHeading: "Antworten",
-  subheading: "Finden Sie Antworten auf die häufigsten Fragen zu unseren Dienstleistungen.",
-  searchPlaceholder: "Nach Fragen suchen...",
-  searchTip: "Tipp: Suchen Sie nach Stichwörtern wie 'Signale', 'Wallet' oder 'Support'",
-  noResults: "Keine Fragen gefunden, die Ihrer Suche entsprechen.",
-  clearSearch: "Suche zurücksetzen",
-  categories: {
-    general: "Allgemeine Fragen",
-    signals: "Signale & Analysen",
-    technical: "Technische Fragen",
-    support: "Support & Hilfe",
-  },
-  questions: {
-    experienceNeeded: {
-      question: "Brauche ich Erfahrung im Krypto Bereich?",
-      answer: "Nein, du brauchst keine Erfahrung, wir erklären dir all das was für dich NOTWENDIG sein wird GENAU. Das Analysieren, die Marktforschung und das Updaten, übernimmt unser erfahrenes Team für dich!"
+    qa: {
+      title: "Fragen & Antworten",
+      heading: "Fragen &",
+      highlightedHeading: "Antworten",
+      subheading: "Finden Sie Antworten auf die häufigsten Fragen zu unseren Dienstleistungen.",
+      searchPlaceholder: "Nach Fragen suchen...",
+      searchTip: "Tipp: Suchen Sie nach Stichwörtern wie 'Signale', 'Wallet' oder 'Support'",
+      noResults: "Keine Fragen gefunden, die Ihrer Suche entsprechen.",
+      clearSearch: "Suche zurücksetzen",
+      categories: {
+        general: "Allgemeine Fragen",
+        signals: "Signale & Analysen",
+        technical: "Technische Fragen",
+        support: "Support & Hilfe",
+      },
+      questions: {
+        experienceNeeded: {
+          question: "Brauche ich Erfahrung im Krypto Bereich?",
+          answer:
+            "Nein, du brauchst keine Erfahrung, wir erklären dir all das was für dich NOTWENDIG sein wird GENAU. Das Analysieren, die Marktforschung und das Updaten, übernimmt unser erfahrenes Team für dich!",
+        },
+        startingCapital: {
+          question: "Wieviel Startkapital brauche Ich?",
+          answer:
+            "Abgesehen von der Teilnahmegebühr in Höhe von 70,99€, die du monatlich zahlen kannst, solange du noch ein Teil des Netzwerks sein möchtest, darfst du frei entscheiden, mit wieviel Kapital du beginnen möchtest! Ob 10€ oder 10.000€, spielt keine Rolle.",
+        },
+        getHelp: {
+          question: "Wird mir geholfen, falls ich was nicht verstehe?",
+          answer:
+            "Du wirst ein spezialisiertes Team hinter dir haben, welches du immer erreichen kannst und es wird dir bei JEDEM Anliegen geholfen!",
+        },
+        earningTimeframe: {
+          question: "Wie lange dauert es bis Ich Geld verdiene?",
+          answer:
+            "Ab dem Tag, ab dem du die Teilnahmegebühr zahlst, wirst du SOFORT ein Teil des Netzwerks und wirst der Premium Gruppe hinzugefügt! Du wirst ab SOFORT die nächsten Signale bekommen und kannst mit denen dann Geld verdienen!",
+        },
+        howItWorks: {
+          question: "Wie funktioniert euer System genau?",
+          answer:
+            "Wir haben eine Premium Telegram-Gruppe, in der wir Memecoin-Signale reinschicken, nach ausführlicher Analyse von unserem Team. Zu jedem Coin geben wir dann zusätzlich eine ECHTZEIT BUY-BESTÄTIGUNG (Kaufbestätigung) und teilen auch mit wann GENAU du die Position schließen solltest, damit du maximalen Profit machst!",
+        },
+        monthlyPayment: {
+          question: "Muss ich Monatlich zahlen?",
+          answer:
+            "Du zahlst nur SOLANGE du möchtest! Pro Monat entsteht für die Teilnahme in die exklusive Gruppe eine Gebühr von NUR 70,99,- (von 99,99€) für kurze Zeit. WENN du JETZT dabei bist, zahlst du solange du von den Premium Signalen PROFITIEREN willst monatlich nur 70,99,- (bis du austreten möchtest).",
+        },
+        paymentProcess: {
+          question: "Wie läuft die Zahlung ab?",
+          answer:
+            "Du kannst bequem per Paypal, Kreditkarte, Überweisung (bei deiner Bank) oder auch per Klarna überweisen",
+        },
+        timeInvestment: {
+          question: "Wieviel Zeit muss ich investieren?",
+          answer:
+            "Du wirst TÄGLICH Signale erhalten und diese auch nutzen können! Da wir Dir aber die BUY-, und SELL-Bestätigungen geben werden, musst Du schlussendlich für das Kaufen und Verkaufen der Signale wenige Minuten investieren… Es kommt darauf an wieviele Signale du täglich nutzten wirst. Du kannst die Signale jederzeit nutzen, oder es sein lassen! Durchnittliche, tatsächliche Arbeitszeit: 30Min. - 60Min. Pro Tag.",
+        },
+        freeJoin: {
+          question: "Wie kann ich GRATIS beitreten?",
+          answer:
+            "Indem du 3 Personen für unsere Premium Gruppe und somit auch den exklusiven Signalen anwirbst, und diese dann durch DICH beitreten! Dadurch sparst du dir die Teilnahmegebühr von 70,99,- für MINDESTENS 1 Monat! Solange die 3 Personen ein Teil der Gruppe bleiben, bleibst du ebenfalls KOSTENFREI ein Teil des Netzwerks und profitierst durch die Signale!",
+        },
+        earnMore: {
+          question: "Wie kann ich ZUSÄTZLICH Geld verdienen?",
+          answer:
+            "Ab dem Tag, ab dem du in der Gruppe bist, kannst du ZUSÄTZLICH zu den Memecoin-Investments, EINKOMMEN generieren, indem du pro angeworbene Person, die beitritt, 20,00€ verdienst, PRO MONAT, PRO PERSON (solange die Person in der Gruppe bleibt). Bei der 3 Person bekommst du statt 60,00€ (20€ x 3) -> 70,00€! Bei der 4. und 5. Person weiterhin jeweils 20,00€ pro Person und bei der 6. Person statt insgesamt 120,00€ (20€ x 6) -> 140€! MONATLICH (solange alle Personen ein Teil der Gruppe bleiben)",
+        },
+      },
+      cta: {
+        title: "Haben Sie noch",
+        highlightedTitle: "Fragen?",
+        description: "Unser Team hilft Ihnen gerne bei allen Fragen zu unseren Dienstleistungen weiter.",
+        contact: "Kontaktieren Sie unsere Experten",
+        startNow: "Jetzt starten",
+      },
     },
-    startingCapital: {
-      question: "Wieviel Startkapital brauche Ich?",
-      answer: "Abgesehen von der Teilnahmegebühr in Höhe von 70,99€, die du monatlich zahlen kannst, solange du noch ein Teil des Netzwerks sein möchtest, darfst du frei entscheiden, mit wieviel Kapital du beginnen möchtest! Ob 10€ oder 10.000€, spielt keine Rolle."
-    },
-    getHelp: {
-      question: "Wird mir geholfen, falls ich was nicht verstehe?",
-      answer: "Du wirst ein spezialisiertes Team hinter dir haben, welches du immer erreichen kannst und es wird dir bei JEDEM Anliegen geholfen!"
-    },
-    earningTimeframe: {
-      question: "Wie lange dauert es bis Ich Geld verdiene?",
-      answer: "Ab dem Tag, ab dem du die Teilnahmegebühr zahlst, wirst du SOFORT ein Teil des Netzwerks und wirst der Premium Gruppe hinzugefügt! Du wirst ab SOFORT die nächsten Signale bekommen und kannst mit denen dann Geld verdienen!"
-    },
-    howItWorks: {
-      question: "Wie funktioniert euer System genau?",
-      answer: "Wir haben eine Premium Telegram-Gruppe, in der wir Memecoin-Signale reinschicken, nach ausführlicher Analyse von unserem Team. Zu jedem Coin geben wir dann zusätzlich eine ECHTZEIT BUY-BESTÄTIGUNG (Kaufbestätigung) und teilen auch mit wann GENAU du die Position schließen solltest, damit du maximalen Profit machst!"
-    },
-    monthlyPayment: {
-      question: "Muss ich Monatlich zahlen?",
-      answer: "Du zahlst nur SOLANGE du möchtest! Pro Monat entsteht für die Teilnahme in die exklusive Gruppe eine Gebühr von NUR 70,99,- (von 99,99€) für kurze Zeit. WENN du JETZT dabei bist, zahlst du solange du von den Premium Signalen PROFITIEREN willst monatlich nur 70,99,- (bis du austreten möchtest)."
-    },
-    paymentProcess: {
-      question: "Wie läuft die Zahlung ab?",
-      answer: "Du kannst bequem per Paypal, Kreditkarte, Überweisung (bei deiner Bank) oder auch per Klarna überweisen"
-    },
-    timeInvestment: {
-      question: "Wieviel Zeit muss ich investieren?",
-      answer: "Du wirst TÄGLICH Signale erhalten und diese auch nutzen können! Da wir Dir aber die BUY-, und SELL-Bestätigungen geben werden, musst Du schlussendlich für das Kaufen und Verkaufen der Signale wenige Minuten investieren… Es kommt darauf an wieviele Signale du täglich nutzten wirst. Du kannst die Signale jederzeit nutzen, oder es sein lassen! Durchnittliche, tatsächliche Arbeitszeit: 30Min. - 60Min. Pro Tag."
-    },
-    freeJoin: {
-      question: "Wie kann ich GRATIS beitreten?",
-      answer: "Indem du 3 Personen für unsere Premium Gruppe und somit auch den exklusiven Signalen anwirbst, und diese dann durch DICH beitreten! Dadurch sparst du dir die Teilnahmegebühr von 70,99,- für MINDESTENS 1 Monat! Solange die 3 Personen ein Teil der Gruppe bleiben, bleibst du ebenfalls KOSTENFREI ein Teil des Netzwerks und profitierst durch die Signale!"
-    },
-    earnMore: {
-      question: "Wie kann ich ZUSÄTZLICH Geld verdienen?",
-      answer: "Ab dem Tag, ab dem du in der Gruppe bist, kannst du ZUSÄTZLICH zu den Memecoin-Investments, EINKOMMEN generieren, indem du pro angeworbene Person, die beitritt, 20,00€ verdienst, PRO MONAT, PRO PERSON (solange die Person in der Gruppe bleibt). Bei der 3 Person bekommst du statt 60,00€ (20€ x 3) -> 70,00€! Bei der 4. und 5. Person weiterhin jeweils 20,00€ pro Person und bei der 6. Person statt insgesamt 120,00€ (20€ x 6) -> 140€! MONATLICH (solange alle Personen ein Teil der Gruppe bleiben)"
-    }
-  },
-  cta: {
-    title: "Haben Sie noch",
-    highlightedTitle: "Fragen?",
-    description: "Unser Team hilft Ihnen gerne bei allen Fragen zu unseren Dienstleistungen weiter.",
-    contact: "Kontaktieren Sie unsere Experten",
-    startNow: "Jetzt starten",
-  },
-},
     joinedStudents: {
       title: "Schließe dich 2.500+ Studenten an, die bereits profitieren",
       pricing: "Studenten, die beigetreten sind, zahlen jetzt nur €70,99 statt €99,99",

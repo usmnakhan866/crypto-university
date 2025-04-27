@@ -7,6 +7,7 @@ import { useLanguage } from "@/context/language-context"
 const VideoSection = () => {
   const [isPlaying, setIsPlaying] = useState(false)
   const [isMuted, setIsMuted] = useState(true)
+  const [videoSrc, setVideoSrc] = useState("")
   const videoRef = useRef<HTMLIFrameElement>(null)
   const { t } = useLanguage()
 
@@ -16,20 +17,17 @@ const VideoSection = () => {
       const message = isMuted
         ? '{"event":"command","func":"unMute","args":""}'
         : '{"event":"command","func":"mute","args":""}'
-
       iframe.contentWindow?.postMessage(message, "*")
       setIsMuted(!isMuted)
     }
   }
 
   const playVideo = () => {
+    const autoplayUrl = "https://drive.google.com/file/d/1FDKsI94ok6MCD3IgVlbef9jOLReteZZT/preview?autoplay=1"
+    setVideoSrc(autoplayUrl)
     setIsPlaying(true)
   }
 
-  // Video URL
-  const videoUrl = "https://drive.google.com/file/d/1FDKsI94ok6MCD3IgVlbef9jOLReteZZT/preview"
-
-  // Using your Imgur link (added .jpg extension for better compatibility)
   const thumbnailUrl = "https://i.imgur.com/y3UEMbq.jpg"
 
   return (
@@ -69,7 +67,7 @@ const VideoSection = () => {
               <iframe
                 ref={videoRef}
                 className="absolute top-0 left-0 w-full h-full"
-                src={videoUrl}
+                src={videoSrc}
                 title="Crypto Currency Commercial"
                 allow="autoplay"
                 allowFullScreen
