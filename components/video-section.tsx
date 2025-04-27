@@ -7,9 +7,13 @@ import { useLanguage } from "@/context/language-context"
 const VideoSection = () => {
   const [isPlaying, setIsPlaying] = useState(false)
   const [isMuted, setIsMuted] = useState(true)
-  const [videoSrc, setVideoSrc] = useState("")
+  const [videoLoaded, setVideoLoaded] = useState(false)
   const videoRef = useRef<HTMLIFrameElement>(null)
   const { t } = useLanguage()
+
+  const playVideo = () => {
+    setIsPlaying(true)
+  }
 
   const toggleMute = () => {
     if (videoRef.current) {
@@ -22,12 +26,16 @@ const VideoSection = () => {
     }
   }
 
-  const playVideo = () => {
-    const autoplayUrl = "https://drive.google.com/file/d/1FDKsI94ok6MCD3IgVlbef9jOLReteZZT/preview?autoplay=1"
-    setVideoSrc(autoplayUrl)
-    setIsPlaying(true)
+  const handleIframeLoad = () => {
+    if (videoRef.current && isPlaying && !videoLoaded) {
+      const iframe = videoRef.current
+      const playMessage = '{"event":"command","func":"playVideo","args":""}'
+      iframe.contentWindow?.postMessage(playMessage, "*")
+      setVideoLoaded(true)
+    }
   }
 
+  const videoSrc = "https://drive.google.com/file/d/1FDKsI94ok6MCD3IgVlbef9jOLReteZZT/preview"
   const thumbnailUrl = "https://i.imgur.com/y3UEMbq.jpg"
 
   return (
@@ -44,15 +52,14 @@ const VideoSection = () => {
         <div className="relative aspect-video max-w-4xl mx-auto rounded-lg overflow-hidden border-8 border-white shadow-2xl">
           {!isPlaying ? (
             <div
-              className="absolute inset-0 bg-cover bg-center cursor-pointer"
-              style={{
-                backgroundImage: `url('${thumbnailUrl}')`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                backgroundRepeat: "no-repeat",
-              }}
+              className="absolute inset-0 flex items-center justify-center bg-black cursor-pointer"
               onClick={playVideo}
             >
+              <img
+                src={thumbnailUrl}
+                alt="Video Thumbnail"
+                className="max-w-full max-h-full object-contain"
+              />
               <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
                 <button
                   className="w-20 h-20 bg-white rounded-full flex items-center justify-center hover:scale-110 transition-transform duration-300 shadow-xl"
@@ -66,6 +73,7 @@ const VideoSection = () => {
             <div className="relative w-full h-0 pb-[56.25%]">
               <iframe
                 ref={videoRef}
+                onLoad={handleIframeLoad}
                 className="absolute top-0 left-0 w-full h-full"
                 src={videoSrc}
                 title="Crypto Currency Commercial"
