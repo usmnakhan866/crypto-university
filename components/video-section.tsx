@@ -1,39 +1,20 @@
 "use client"
 
-import { useState, useRef, useEffect } from "react"
-import { Play, Volume2, VolumeX } from "lucide-react"
+import { useState, useRef } from "react"
+import { Play } from "lucide-react"
 import { useLanguage } from "@/context/language-context"
 
 const VideoSection = () => {
   const [isPlaying, setIsPlaying] = useState(false)
-  const [isMuted, setIsMuted] = useState(true)
-  const [iframeLoaded, setIframeLoaded] = useState(false)
   const videoRef = useRef<HTMLIFrameElement>(null)
   const { t } = useLanguage()
 
-  const videoSrc = "https://drive.google.com/file/d/1FDKsI94ok6MCD3IgVlbef9jOLReteZZT/preview"
-  const thumbnailUrl = "https://i.imgur.com/y3UEMbq.jpg"
+  // Ensure muted=1 is always in the URL
+  const videoSrc = "https://player.vimeo.com/video/1079403268?autoplay=1&muted=1" 
+  const thumbnailUrl = "https://i.imgur.com/y3UEMbq.jpg" // your thumbnail
 
   const handlePlay = () => {
     setIsPlaying(true)
-  }
-
-  const handleIframeLoad = () => {
-    if (videoRef.current) {
-      const playMessage = '{"event":"command","func":"playVideo","args":""}'
-      videoRef.current.contentWindow?.postMessage(playMessage, "*")
-      setIframeLoaded(true)
-    }
-  }
-
-  const toggleMute = () => {
-    if (videoRef.current) {
-      const message = isMuted
-        ? '{"event":"command","func":"unMute","args":""}'
-        : '{"event":"command","func":"mute","args":""}'
-      videoRef.current.contentWindow?.postMessage(message, "*")
-      setIsMuted(!isMuted)
-    }
   }
 
   return (
@@ -59,7 +40,7 @@ const VideoSection = () => {
               <img
                 src={thumbnailUrl}
                 alt="Video Thumbnail"
-                className="max-w-full max-h-full object-cover w-full h-full"
+                className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
                 <button
@@ -75,25 +56,11 @@ const VideoSection = () => {
               <iframe
                 ref={videoRef}
                 src={videoSrc}
-                title="Crypto Currency Commercial"
-                allow="autoplay"
+                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
                 allowFullScreen
-                onLoad={handleIframeLoad}
                 className="absolute top-0 left-0 w-full h-full"
+                title="MEME COIN AGENT INTRO VIDEO"
               ></iframe>
-
-              {/* Mute/Unmute Button */}
-              <button
-                onClick={toggleMute}
-                className="absolute bottom-4 right-4 bg-black/50 p-2 rounded-full hover:bg-black/70 transition-colors"
-                aria-label={isMuted ? t("videoSection.unmuteButton") : t("videoSection.muteButton")}
-              >
-                {isMuted ? (
-                  <VolumeX size={20} className="text-white" />
-                ) : (
-                  <Volume2 size={20} className="text-white" />
-                )}
-              </button>
             </div>
           )}
         </div>
