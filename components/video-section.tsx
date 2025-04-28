@@ -9,8 +9,8 @@ const VideoSection = () => {
   const videoRef = useRef<HTMLIFrameElement>(null)
   const { t } = useLanguage()
 
-  // Ensure muted=1 is always in the URL
-  const videoSrc = "https://player.vimeo.com/video/1079403268?autoplay=1&muted=1" 
+  // Updated Vimeo URL with parameters to hide branding and controls
+  const videoSrc = "https://player.vimeo.com/video/1079403268?autoplay=1&title=0&byline=0&portrait=0" 
   const thumbnailUrl = "https://i.imgur.com/y3UEMbq.jpg" // your thumbnail
 
   const handlePlay = () => {
